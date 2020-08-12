@@ -3,7 +3,20 @@ body{
     width:100%;
     height:100vh;
 }
-
+form{
+    padding-top:20px;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.form-control:focus {
+    border-color: slategray;
+    box-shadow: inset 0 1px 1px slategray, 0 0 8px slategray;
+}
+.formSubmit{
+    width:150px;
+    margin:auto;
+}
 #wrapper{
     height:100%;
     display:flex;
@@ -18,7 +31,18 @@ body{
     background-color:gray !important;
     color:white !important;
 }
+#nav-tab{
+    display:flex;
+    justify-content: center;
+}
+.col-form-label{
+    text-align:end;
+}
 #tabWrapper{
-    border:1px solid black;
 
+    min-width:400px;
+    min-height:400px;
+}
+.indexInput{
+    max-width:70%;
 }
