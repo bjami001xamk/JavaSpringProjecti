@@ -21,9 +21,10 @@ public class Person extends AbstractPersistable<Long> {
 
     private String firstName;
     private String lastName;
-//    private List<String> skills = new ArrayList<>();
-//    private List<String> posts = new ArrayList<>();
     private String userUrl;
+
+    @OneToMany(mappedBy = "person")
+    private List<Skill> personSkills = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.MERGE) // Fetch type lazy?
     @JoinColumn(name= "picture_id")

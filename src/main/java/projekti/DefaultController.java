@@ -24,6 +24,9 @@ public class DefaultController {
     @Autowired
     private PictureRepository pictureRepository;
 
+    @Autowired
+    private SkillRepository skillRepository;
+
     @GetMapping("/")
     public String helloWorld(Model model) {
         model.addAttribute("message", "World!");
@@ -44,7 +47,9 @@ public class DefaultController {
 
     @GetMapping("/users/{userUrl}")
     public String personPage(@PathVariable String userUrl, Model model) {
-        model.addAttribute("person", personRepository.findByUserUrl(userUrl));
+        Person person = personRepository.findByUserUrl(userUrl);
+        model.addAttribute("person", person);
+        model.addAttribute("skills", person.getPersonSkills());
         return "person";
     }
 
@@ -53,10 +58,14 @@ public class DefaultController {
     public String testing() {
         Picture pictureTest = new Picture();
         Person testPerson = new Person("testietu", "testitaka", "testiurl", pictureTest);
+        Skill newSkill = new Skill(testPerson,"uusitaito");
+        testPerson.getPersonSkills().add(newSkill);
+        System.out.println("testi");
         pictureTest.setPerson(testPerson);
+
         pictureRepository.save(pictureTest);
         personRepository.save(testPerson);
-
+        skillRepository.save(newSkill);
         Picture pictureTest2 = new Picture();
         Person testPerson2 = new Person("aaa", "bbb", "ccc", pictureTest2);
         pictureTest2.setPerson(testPerson2);
