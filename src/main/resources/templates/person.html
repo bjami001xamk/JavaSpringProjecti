@@ -9,7 +9,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
 <body>
-    <p th:text="${person.firstName}">testia</p>
     <form id="form" th:action="@{/addPicture}" method="POST" enctype="multipart/form-data">
         <img th:src="@{${'/pictures/' + person.userUrl + '/'}}" />
         <input type="text" th:value="${person.userUrl}" name="userUrl" class="d-none" />
