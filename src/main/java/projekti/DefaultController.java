@@ -69,7 +69,7 @@ public class DefaultController {
     public String receivePicture(@RequestParam("file") MultipartFile file, @RequestParam String userUrl) throws IOException {
         Person person = personRepository.findByUserUrl(userUrl);
         Picture newPicture = person.getPicture();
-        //newPicture.setContent(file.getBytes());
+        newPicture.setContent(file.getBytes());
         newPicture.setFileName(file.getOriginalFilename());
         newPicture.setSize(file.getSize());
         newPicture.setContentType(file.getContentType());
