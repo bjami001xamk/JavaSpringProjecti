@@ -83,7 +83,7 @@ public class DefaultController {
         return "redirect:/users/" + userUrl;
     }
 
-    @GetMapping("/pictures/{userUrl}/testi.jpg")
+    @GetMapping("/pictures/{userUrl}")
     public ResponseEntity<byte[]> testPicture(@PathVariable String userUrl) {
         Person person = personRepository.findByUserUrl(userUrl);
         Picture picture = person.getPicture();
