@@ -45,7 +45,6 @@ public class DefaultController {
     @GetMapping("/users/{userUrl}")
     public String personPage(@PathVariable String userUrl, Model model) {
         model.addAttribute("person", personRepository.findByUserUrl(userUrl));
-        System.out.println(personRepository.findByUserUrl(userUrl).getFirstName());
         return "person";
     }
 
