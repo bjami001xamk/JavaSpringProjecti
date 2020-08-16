@@ -90,7 +90,7 @@ public class DefaultController {
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(picture.getContentType()));
         headers.setContentLength(picture.getSize());
-        headers.add("Content-Disposition", "attachment; filename=" + picture.getFileName());
+        //headers.add("Content-Disposition", "attachment; filename=" + picture.getFileName());
         return new ResponseEntity<>(picture.getContent(), headers, HttpStatus.CREATED);
     }
 
