@@ -69,7 +69,7 @@ public class DefaultController {
     public String receivePicture(@RequestParam("file") MultipartFile file, @RequestParam String userUrl) throws IOException {
         Person person = personRepository.findByUserUrl(userUrl);
         Picture newPicture = person.getPicture();
-        newPicture.setContent(file.getBytes());
+        //newPicture.setContent(file.getBytes());
         newPicture.setFileName(file.getOriginalFilename());
         newPicture.setSize(file.getSize());
         newPicture.setContentType(file.getContentType());
@@ -82,7 +82,7 @@ public class DefaultController {
 
         return "redirect:/users/" + userUrl;
     }
-
+    /*
     @GetMapping("/pictures/{userUrl}/")
     public ResponseEntity<byte[]> testPicture(@PathVariable String userUrl) {
         Person person = personRepository.findByUserUrl(userUrl);
@@ -92,7 +92,6 @@ public class DefaultController {
         headers.setContentLength(picture.getSize());
         headers.add("Content-Disposition", "attachment; filename=" + picture.getFileName());
         return new ResponseEntity<>(picture.getContent(), headers, HttpStatus.CREATED);
-
     }
-
+    */
 }
