@@ -28,7 +28,7 @@ public class DefaultController {
     public String helloWorld(Model model) {
         model.addAttribute("message", "World!");
         model.addAttribute("testi", "testi");
-        Person person = personRepository.findByUserUrl("testiurl");
+        //Person person = personRepository.findByUserUrl("testiurl");
         return "index";
     }
 
