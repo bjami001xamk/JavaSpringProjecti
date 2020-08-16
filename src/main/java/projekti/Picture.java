@@ -18,7 +18,7 @@ public class Picture extends AbstractPersistable<Long> {
     private String contentType;
     private Long size;
 
-    @Lob
+    //@Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] content;
 
