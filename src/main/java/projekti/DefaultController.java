@@ -83,14 +83,14 @@ public class DefaultController {
         return "redirect:/users/" + userUrl;
     }
 
-    @GetMapping("/pictures/{userUrl}/")
+    @GetMapping("/pictures/{userUrl}/testi.jpg")
     public ResponseEntity<byte[]> testPicture(@PathVariable String userUrl) {
         Person person = personRepository.findByUserUrl(userUrl);
         Picture picture = person.getPicture();
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(picture.getContentType()));
         headers.setContentLength(picture.getSize());
-        //headers.add("Content-Disposition", "attachment; filename=" + picture.getFileName());
+        headers.add("Content-Disposition", "attachment; filename=" + picture.getFileName());
         return new ResponseEntity<>(picture.getContent(), headers, HttpStatus.CREATED);
     }
 
