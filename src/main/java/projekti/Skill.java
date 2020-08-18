@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +21,13 @@ public class Skill extends AbstractPersistable<Long>{
     @ManyToOne
     private Person person;
     private String skillName;
-    //private List<Long> peopleWhoHasLiked = new ArrayList<>();
 
-    //@OneToMany("mappedBy = skill")
-    //private List<Person> peopleWhoHasliked = new ArrayList<>();
-
-
+    @ManyToMany
+    private List<Person> peopleWhoLiked = new ArrayList<>();
+    
+    public Skill(Person person, String skillName) {
+        this.person = person;
+        this.skillName = skillName;
+        this.peopleWhoLiked = new ArrayList<>();
+    }
 }

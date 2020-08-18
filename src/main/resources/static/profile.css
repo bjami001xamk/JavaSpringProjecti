@@ -1,0 +1,161 @@
+body{
+    background: radial-gradient(ellipse at 50% 50%, #fff 0%, #9f9f9f 86.27%);
+    width:100%;
+    height:100vh;
+}
+hr{
+    border:1px solid gray;
+}
+
+.contentWindow{
+    box-shadow:0px 0px 25px gray;
+    border:1px solid white;
+    opacity:0.8;
+    border-radius:5px;
+    background-color:ghostwhite;
+}
+
+
+#leftSide{
+    display:flex;
+    flex-direction: column;
+        
+}
+
+#rightSide{
+    margin-right:10px;
+}
+
+#wrapper{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+}
+
+#contentWrapper{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+#links{
+    display:flex;
+    justify-content:flex-end;
+    padding-right:20px;
+}
+
+#links a{
+    padding:15px;
+    font-size:16px;
+}
+
+#nameAndPicture img{
+    max-height: 150px;
+    
+    
+}
+
+#nameAndPicture > * {
+    margin-left:20px;
+    margin-right:20px;
+    font-size:28px;
+}
+
+#nameAndPicture{
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    flex-direction:column;
+}
+
+#skills{
+    max-width:300px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    margin:10px;
+}
+h5{
+   padding-top:10px;
+}
+.skillRow{
+    display:flex;
+    justify-content: center;
+}
+.skillRow > *{
+    padding-left:5px;
+    padding-right:5px;
+}
+.skillRow span:first-child{
+    text-align:right;
+}
+.skillElement{
+    min-width:100px;
+}
+
+#skillForm{
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items:center;
+}
+
+#skillForm input{
+    
+    max-width:250px;
+}
+#submitButton{
+    width:150px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+
+
+#posts{
+    min-width: 700px;
+    margin-top:10px;
+}
+
+
+
+/*
+form{
+    padding-top:20px;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.form-control:focus {
+    border-color: slategray;
+    box-shadow: inset 0 1px 1px slategray, 0 0 8px slategray;
+}
+.formSubmit{
+    width:150px;
+    margin:auto;
+}
+.nav-link{
+    color:black;
+}
+.nav-link.active{
+    background-color:gray !important;
+    color:white !important;
+}
+#nav-tab{
+    display:flex;
+    justify-content: center;
+}
+.col-form-label{
+    text-align:end;
+}
+#tabWrapper{
+
+    min-width:400px;
+    min-height:400px;
+}
+.indexInput{
+    max-width:70%;
+}
+*/

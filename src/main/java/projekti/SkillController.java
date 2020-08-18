@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class SkillController {
@@ -23,6 +22,22 @@ public class SkillController {
         person.getPersonSkills().add(newSkill);
         skillRepository.save(newSkill);
         personRepository.save(person);
+        return "redirect:/users/" + userUrl;
+    }
+
+    @PostMapping("users/{userUrl}/likeskill")
+    public String likeSkill(@RequestParam Long skillId, @PathVariable String userUrl) {
+        
+        //toimiva
+        Skill skill = skillRepository.getOne(skillId);
+        Person personWhoIsLiking = personRepository.findByUserUrl("ccc");
+        
+        if(skill.getPeopleWhoLiked().contains(personWhoIsLiking)) {
+            return "redirect:/users/" + userUrl;
+        }
+        skill.getPeopleWhoLiked().add(personWhoIsLiking);
+        skillRepository.save(skill);
+                
         return "redirect:/users/" + userUrl;
     }
 }

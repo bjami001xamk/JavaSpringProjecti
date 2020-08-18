@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 public class DefaultController {
 
-    @Autowired
-    private AccountRepository accountRepository;
+    //@Autowired
+    //private AccountRepository accountRepository;
 
     @Autowired
     private PersonRepository personRepository;
@@ -26,6 +27,9 @@ public class DefaultController {
 
     @Autowired
     private SkillRepository skillRepository;
+
+    @Autowired
+    private PostRepository postRepository;
 
     @GetMapping("/")
     public String helloWorld(Model model) {
@@ -37,7 +41,7 @@ public class DefaultController {
 
     @PostMapping("/login")
     public String login(@RequestParam String userId, @RequestParam String password) {
-        Account account = accountRepository.findByUsername(userId);
+        //Account account = accountRepository.findByUsername(userId);
 
 
         System.out.println(userId);
@@ -50,6 +54,7 @@ public class DefaultController {
         Person person = personRepository.findByUserUrl(userUrl);
         model.addAttribute("person", person);
         model.addAttribute("skills", person.getPersonSkills());
+        model.addAttribute("posts", postRepository.findAll());
         return "person";
     }
 
@@ -92,10 +97,14 @@ public class DefaultController {
         return "redirect:/users/" + userUrl;
     }
 
+    
     @GetMapping("/pictures/{userUrl}")
     public ResponseEntity<byte[]> testPicture(@PathVariable String userUrl) {
         Person person = personRepository.findByUserUrl(userUrl);
         Picture picture = person.getPicture();
+        if(picture.getFileName() == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Person has not set profile image yet");
+        }
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(picture.getContentType()));
         headers.setContentLength(picture.getSize());

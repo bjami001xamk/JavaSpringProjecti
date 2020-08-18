@@ -1,4 +1,4 @@
-package projekti;
+/*package projekti;
 
 
 import lombok.AllArgsConstructor;
@@ -15,3 +15,4 @@ public class Account extends AbstractPersistable<Long> {
     private String username;
     private String password;
 }
+*/

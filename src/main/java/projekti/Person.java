@@ -13,8 +13,6 @@ import java.util.List;
 @Data @NoArgsConstructor @AllArgsConstructor
 public class Person extends AbstractPersistable<Long> {
 
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -23,20 +21,32 @@ public class Person extends AbstractPersistable<Long> {
     private String lastName;
     private String userUrl;
 
+
     @OneToMany(mappedBy = "person")
     private List<Skill> personSkills = new ArrayList<>();
+    
+    @ManyToMany(mappedBy = "person")
+    private List<Skill> skillsThatPersonHasLiked = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.MERGE) // Fetch type lazy?
     @JoinColumn(name= "picture_id")
     private Picture picture;
 
+    
+   
+    @OneToMany(mappedBy = "poster")
+    private List<Post> posts = new ArrayList<>();
+    
+    
     public Person(String firstName, String lastName, String userUrl, Picture picture) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userUrl = userUrl;
         this.picture = picture;
 
-
     }
 
+    @ManyToMany
+    private List<Post> likedPosts = new ArrayList<>();
+    
 }

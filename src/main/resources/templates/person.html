@@ -7,15 +7,85 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <link href="../static/profile.css" th:href="@{/profile.css}" rel="stylesheet" />
 </head>
 <body>
+    <div id="wrapper">
+        <div id="links">
+            <a>Your Profile</a>
+            <a>Search people</a>
+            <a>Logout</a>
+        </div>
+    
+        <div id="nameAndPicture">
+            <img th:if="${person.getPicture().getFileName()} == null" src="https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg" />
+            <img th:unless="${person.getPicture().getFileName()} == null" th:src="@{${'/pictures/' + person.userUrl + '/'}}" />
+            <span th:text="${person.getFirstName() + ' ' + person.getLastName()}"></span>
+            
+            
+            
+        </div>
+        <div id="contentWrapper">
+            <div id="leftSide">
+                <div id="skills" class="contentWindow">
+                    <h5 class="text-center">Your current skills:</h5>
+                    <ul>
+                        <li th:each="skill : ${skills}" class='skillRow'>
+                            <span th:text="${skill.getSkillName()}" class="skillElement"></span>
+                            <span>-</span>
+                            <span th:text="${#lists.size(skill.getPeopleWhoLiked())} + ' Endorsements'" class="skillElement">[Engine Size]</span>
+                        </li>
+                    </ul>
+                    <form id="skillForm" th:action="@{${'/users/' + person.userUrl + '/addskill'}}" method="POST">
+                        <input type="text" name="skillText" />
+                        <input id="submitButton" type="submit" value="Add new Skill" />
+                    </form>
+                </div>
+            </div>
+                <div id="rightSide" class="mt-2">
+                    <div id="newPost" class="contentWindow">
+                        <h5 class="text-center ">Add a New post</h5>
+                        <form th:action="@{${'/users/' + person.userUrl + '/addPost'}}" method="POST" class="d-flex flex-column">
+                            <textarea placeholder="Write your post here" rows="4" cols="40" name="postContent" class="m-2"></textarea>
+                            
+                            <!--<input type="text" name="postContent" />-->
+                            <input type="submit" value="Add new Post" class="w-25 mx-auto m-2"/>
+                        </form>
+                        
+
+
+                    </div>
+
+                    <div id="posts" class="contentWindow">
+                        <h5 class="text-center">Posts:</h5>
+                        <div th:each="post : ${posts}">
+                            <hr class="w-75"/>
+                            <div>
+                                <p th:text="${post.content}" class="mx-5"></p>
+                                <div class="d-flex flex-row justify-content-end mr-3 mb-3">
+                                <span th:text="${post.poster.firstName + ' ' + post.poster.lastName}"></span>
+                                <span th:text="${post.postTime}" class="ml-3 font-weight-light"></span>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                
+        </div>    
+    </div>
+    
+    <!--<span th:text="${person.getPicture().getFileName()}">testi</span>->>
+    
+    <!--
     <form id="form" th:action="@{/addPicture}" method="POST" enctype="multipart/form-data">
         <img th:src="@{${'/pictures/' + person.userUrl + '/'}}" />
         <input type="text" th:value="${person.userUrl}" name="userUrl" class="d-none" />
         <input type="file" id="files" name="file" onchange="form.submit()" class="d-none"/>
         <Button id="kuvavaihto">Nappi</Button>
     </form>
-
+    <!--
     <form th:action="@{${'/users/' + person.userUrl + '/addskill'}}" method="POST">
         <input type="text" name="skillText" />
         <input type="submit" value="Add new Skill" />
@@ -26,10 +96,35 @@
         <ul>
            <li th:each="skill : ${skills}">
                <span th:text="${skill.getSkillName()}">testi</span>
+               <form th:action="@{${'/users/' + person.userUrl + '/likeskill'}}" method="POST">
+                   <input type="text" th:value="${person.getUserUrl()}" name="userUrl" class="d-none" />
+                   <input type="text" th:value="${skill.getId()}" name="skillId" class="d-none" />
+                   <!--<input type="text" th:value="${skill.person}" name="skillOwner" class="d-none" />--><!--
+                   <input type="submit" value="tykkaa" />
+               </form>
            </li>
 
         </ul>
     </div>
+    <div>
+        <h2>Create a Post</h2>
+        <form th:action="@{${'/users/' + person.userUrl + '/addPost'}}" method="POST">
+            <input type="text" name="postContent" />
+            <input type="submit" value="Add new Post" />
+        </form>
+        
+    </div>
+    
+    <div>
+        <h2>Tykkäyksentestaus</h2>
+        <form th:action="@{${'/users/' + person.userUrl + '/likepost'}}" method="POST">
+                   <input type="text" th:value="${person.getUserUrl()}" name="userUrl" class="d-none" />
+                   <input type="text" th:value="4" name="postId" class="d-none" />
+                   <!--<input type="text" th:value="${skill.person}" name="skillOwner" class="d-none" />--><!--
+                   <input type="submit" value="tykkaaPostausta" />
+               </form>
+    </div>
+    -->
 </body>
 <script>
     document.getElementById('kuvavaihto').addEventListener('click', (event) => {

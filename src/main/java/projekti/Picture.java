@@ -8,7 +8,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import javax.persistence.*;
 
 @Entity
-@Data @NoArgsConstructor @AllArgsConstructor
+@Data @AllArgsConstructor @NoArgsConstructor
 public class Picture extends AbstractPersistable<Long> {
 
     @Id
@@ -18,7 +18,7 @@ public class Picture extends AbstractPersistable<Long> {
     private String contentType;
     private Long size;
 
-    //@Lob
+    @Lob //Poista jotta toimii Herokussa 
     @Basic(fetch = FetchType.LAZY)
     private byte[] content;
 
