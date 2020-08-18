@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Winkedin</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -11,29 +11,36 @@
 </head>
 <body>
     <div id="wrapper">
-        <div id="links">
-            <a>Your Profile</a>
-            <a>Search people</a>
-            <a>Logout</a>
+
+        <div id="header" class="d-flex flex-row justify-content-between pt-2">
+            <div id="logoText">
+                <h1 class="pl-5">Winkedin</h1>
+            </div>
+            
+        
+            <div id="nameAndPicture">
+                
+                <span th:text="${person.getFirstName() + ' ' + person.getLastName()}" class="p-1"></span> 
+            </div>
+            <div id="links">
+                <a href="/profile">Your Profile</a>
+                <a onclick="launchModal()" href="javascript:;" id="searchPeople">Search people</a>
+                <a th:href="@{/logout}">Logout</a>
+            </div>
         </div>
-    
-        <div id="nameAndPicture">
-            <img th:if="${person.getPicture().getFileName()} == null" src="https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg" />
-            <img th:unless="${person.getPicture().getFileName()} == null" th:src="@{${'/pictures/' + person.userUrl + '/'}}" />
-            <span th:text="${person.getFirstName() + ' ' + person.getLastName()}"></span>
-            
-            
-            
-        </div>
-        <div id="contentWrapper">
+        
+
+        <div id="contentWrapper" class="pt-1">
             <div id="leftSide">
+                <img th:if="${person.getPicture().getFileName()} == null" src="https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg" />
+                <img th:unless="${person.getPicture().getFileName()} == null" th:src="@{${'/pictures/' + person.userUrl + '/'}}" />
                 <div id="skills" class="contentWindow">
                     <h5 class="text-center">Your current skills:</h5>
                     <ul>
                         <li th:each="skill : ${skills}" class='skillRow'>
                             <span th:text="${skill.getSkillName()}" class="skillElement"></span>
                             <span>-</span>
-                            <span th:text="${#lists.size(skill.getPeopleWhoLiked())} + ' Endorsements'" class="skillElement">[Engine Size]</span>
+                            <span th:text="${#lists.size(skill.getPeopleWhoLiked())} + ' Winks'" class="skillElement">[Engine Size]</span>
                         </li>
                     </ul>
                     <form id="skillForm" th:action="@{${'/users/' + person.userUrl + '/addskill'}}" method="POST">
@@ -75,17 +82,38 @@
                 
         </div>    
     </div>
-    
-    <!--<span th:text="${person.getPicture().getFileName()}">testi</span>->>
-    
+    <!--<button type="button" onclick="launchModal()" id="modalButton" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Launch demo modal
+      </button>-->
+      
+    <!-- Search persons modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Search people:</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body d-flex flex-column" id="modalText">
+              Loading...
+            </div>
+          </div>
+        </div>
+      </div>
+
     <!--
+    <span th:text="${person.getPicture().getFileName()}">testi</span>->>
+    
+    
     <form id="form" th:action="@{/addPicture}" method="POST" enctype="multipart/form-data">
         <img th:src="@{${'/pictures/' + person.userUrl + '/'}}" />
         <input type="text" th:value="${person.userUrl}" name="userUrl" class="d-none" />
         <input type="file" id="files" name="file" onchange="form.submit()" class="d-none"/>
         <Button id="kuvavaihto">Nappi</Button>
     </form>
-    <!--
+    
     <form th:action="@{${'/users/' + person.userUrl + '/addskill'}}" method="POST">
         <input type="text" name="skillText" />
         <input type="submit" value="Add new Skill" />
@@ -99,7 +127,7 @@
                <form th:action="@{${'/users/' + person.userUrl + '/likeskill'}}" method="POST">
                    <input type="text" th:value="${person.getUserUrl()}" name="userUrl" class="d-none" />
                    <input type="text" th:value="${skill.getId()}" name="skillId" class="d-none" />
-                   <!--<input type="text" th:value="${skill.person}" name="skillOwner" class="d-none" />--><!--
+                   <input type="text" th:value="${skill.person}" name="skillOwner" class="d-none" />--><!--
                    <input type="submit" value="tykkaa" />
                </form>
            </li>
@@ -120,16 +148,30 @@
         <form th:action="@{${'/users/' + person.userUrl + '/likepost'}}" method="POST">
                    <input type="text" th:value="${person.getUserUrl()}" name="userUrl" class="d-none" />
                    <input type="text" th:value="4" name="postId" class="d-none" />
-                   <!--<input type="text" th:value="${skill.person}" name="skillOwner" class="d-none" />--><!--
+                   <input type="text" th:value="${skill.person}" name="skillOwner" class="d-none" />--><!--
                    <input type="submit" value="tykkaaPostausta" />
                </form>
     </div>
     -->
 </body>
 <script>
-    document.getElementById('kuvavaihto').addEventListener('click', (event) => {
-        event.preventDefault();
-        document.getElementById('files').click();
-    })
+    //document.getElementById('kuvavaihto').addEventListener('click', (event) => {
+    //    event.preventDefault();
+    //    document.getElementById('files').click();
+    //})
+    launchModal = async() => {
+        $("#exampleModal").modal('show');
+        let data = await fetch("/allpersons");
+        data = await data.json();
+        data = data.map(person => "<a class='p-2'href= /users/" + person.userUrl + ">" + person.firstName + " " + person.lastName + "</a>");
+        data = data.join('');
+        document.getElementById("modalText").innerHTML = data;
+        
+
+    }
+
+    //document.getElementById("searchPeople").onclick = launchModal();
+
+
 </script>
 </html>

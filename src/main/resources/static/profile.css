@@ -1,3 +1,7 @@
+@font-face{
+    font-family: Spirax;
+    src: url(Spirax-Regular.ttf);
+}
 body{
     background: radial-gradient(ellipse at 50% 50%, #fff 0%, #9f9f9f 86.27%);
     width:100%;
@@ -6,13 +10,16 @@ body{
 hr{
     border:1px solid gray;
 }
-
+#header > * {
+    width:33.333%;
+}
 .contentWindow{
-    box-shadow:0px 0px 25px gray;
+    box-shadow:0px 0px 2px gray;
     border:1px solid white;
     opacity:0.8;
-    border-radius:5px;
-    background-color:ghostwhite;
+    border-radius:0px;
+    background-color:white;
+    opacity:0.8;
 }
 
 
@@ -47,12 +54,15 @@ hr{
 
 #links a{
     padding:15px;
-    font-size:16px;
+    font-size:20px;
+    font-family:Spirax;
+    font-weight:bold;
 }
 
-#nameAndPicture img{
-    max-height: 150px;
-    
+img{
+    max-height: 200px;
+    width:auto;
+    margin:10px;
     
 }
 
@@ -118,8 +128,21 @@ h5{
     min-width: 700px;
     margin-top:10px;
 }
+a{
+    color:black;
+}
 
+a:hover{
+    text-decoration:none;
+    color:white;
+    text-shadow:0px 0px 4px black;
+    transition: 0.3s;
+}
 
+h1{
+    font-family:Spirax;
+    font-size:70px;
+}
 
 /*
 form{

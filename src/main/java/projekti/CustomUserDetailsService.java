@@ -1,4 +1,4 @@
-/*package projekti;
+package projekti;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,20 +13,20 @@ import java.util.Arrays;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private AccountRepository accountRepository;
+    private PersonRepository personRepository;
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountRepository.findByUsername(username);
+        Person person = personRepository.findByUsername(username);
 
-        if(account == null){
+        if(person == null){
             throw new UsernameNotFoundException("This user isnt in database: " + username);
         }
 
         return new org.springframework.security.core.userdetails.User(
-                account.getUsername(),
-                account.getPassword(),
+                person.getUsername(),
+                person.getPassword(),
                 true,
                 true,
                 true,
@@ -36,4 +36,3 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     }
 }
-*/
