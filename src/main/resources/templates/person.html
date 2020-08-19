@@ -163,8 +163,8 @@
         $("#exampleModal").modal('show');
         let data = await fetch("/allpersons");
         data = await data.json();
-        data = data.map(person => "<a class='p-2'href= /users/" + person.userUrl + ">" + person.firstName + " " + person.lastName + "</a>");
-        data = data.join('');
+        data = data.map(person => "<a class='p-2'href= /users/" + person.userUrl + ">" + person.firstName + " " + person.lastName + "</a>")
+                   .join('');
         document.getElementById("modalText").innerHTML = data;
         
 

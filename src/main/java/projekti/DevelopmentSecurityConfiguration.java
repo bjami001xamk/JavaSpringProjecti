@@ -33,12 +33,13 @@ public class DevelopmentSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .antMatchers("/*.css").permitAll()
                 .antMatchers("/*.ttf").permitAll()
                 .antMatchers("/allpersons").permitAll()
+                .antMatchers("/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
                 .loginPage("/login")   
                 .permitAll()
-                .defaultSuccessUrl("/profile/", true)
+                .defaultSuccessUrl("/profile", true)
                 .and()
             .logout()
                 .permitAll()
@@ -84,7 +85,7 @@ public class DevelopmentSecurityConfiguration extends WebSecurityConfigurerAdapt
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder((passwordEncoder()));
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean

@@ -18,6 +18,9 @@ public class DefaultController {
     // private AccountRepository accountRepository;
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private PersonRepository personRepository;
 
     @Autowired
@@ -66,7 +69,6 @@ public class DefaultController {
     @ResponseBody
     @GetMapping("/testi")
     public String testing() {
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String salasana1 = passwordEncoder.encode("salasana");
 
         Picture pictureTest = new Picture();

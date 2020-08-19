@@ -24,11 +24,14 @@ public class Person extends AbstractPersistable<Long> {
     private Long id;
 
     private String firstName;
+
     private String lastName;
+
     private String userUrl;
 
     @JsonIgnore
     private String username;
+
     @JsonIgnore
     private String password;
 
@@ -45,13 +48,10 @@ public class Person extends AbstractPersistable<Long> {
     @JsonIgnore
     @JoinColumn(name= "picture_id")
     private Picture picture;
-
-    
    
     @OneToMany(mappedBy = "poster")
     @JsonIgnore
     private List<Post> posts = new ArrayList<>();
-    
     
     public Person(String firstName, String lastName, String userUrl, Picture picture, String username, String password) {
         this.firstName = firstName;
@@ -61,6 +61,15 @@ public class Person extends AbstractPersistable<Long> {
         this.username = username;
         this.password = password;
     }
+
+    public Person(PersonValidation person){
+        this.firstName = person.getFirstName();
+        this.lastName = person.getLastName();
+        this.userUrl = person.getUserUrl();
+        this.username = person.getUsername();
+        this.password = person.getPassword();
+    }
+
 
     @ManyToMany
     @JsonIgnore

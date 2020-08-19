@@ -46,7 +46,41 @@
                     </div>
 
 
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <form name="fo" th:action="@{/register}" method="POST">    
+                            <div class="form-group row">
+                                <label for="inputfirstName" class="col-sm-4 col-form-label">First name</label>
+                                <div class="col-sm-8">
+                                    <input name="firstName" type="text" class="form-control indexInput" id="inputfirstName">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputlastName" class="col-sm-4 col-form-label">Last name</label>
+                                <div class="col-sm-8">
+                                    <input name="lastName" type="text" class="form-control indexInput" id="inputlastName">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputUrl" class="col-sm-4 col-form-label">Url tag</label>
+                                <div class="col-sm-8">
+                                    <input name="userUrl" type="text" class="form-control indexInput" id="inputUrl">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputusername" class="col-sm-4 col-form-label">Username</label>
+                                <div class="col-sm-8">
+                                    <input name="username" type="text" class="form-control indexInput" id="inputusername">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword2" class="col-sm-4 col-form-label">Password</label>
+                                <div class="col-sm-8">
+                                    <input name="password" type="password" class="form-control indexInput" id="inputPassword2">
+                                </div>
+                            </div>
+                            <Input class="formSubmit" type="submit" value="Register">
+                        </form>
+                    </div>
 
                 </div>
             </div>
