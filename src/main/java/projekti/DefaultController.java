@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class DefaultController {
-
-    // @Autowired
-    // private AccountRepository accountRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -62,7 +58,6 @@ public class DefaultController {
     @GetMapping(path="/allpersons", produces="application/json")
     @ResponseBody
     public List<Person> returnAllPersons(){
-        //System.out.println(personRepository.findAll().get(0).getFirstName());
         return personRepository.findAll();
     }
 

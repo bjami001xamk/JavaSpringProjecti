@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-        <title>Hello world</title>
+        <title>Winkedin</title>
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -78,7 +78,7 @@
                                     <input name="password" type="password" class="form-control indexInput" id="inputPassword2">
                                 </div>
                             </div>
-                            <Input class="formSubmit" type="submit" value="Register">
+                            <Button class="formSubmit" id="formButton" type="button" onclick="sendForm()">Register</Button>
                         </form>
                     </div>
 
@@ -86,4 +86,33 @@
             </div>
         </div>
     </body>
+
+<script>
+    sendForm = async() => {
+        let data = {
+                firstName: document.getElementById("inputfirstName").value,
+                lastName: document.getElementById("inputlastName").value,
+                userUrl: document.getElementById("inputUrl").value,
+                username: document.getElementById("inputusername").value,
+                password: document.getElementById("inputPassword2").value
+            }
+
+        const formBody = Object.keys(data).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key])).join('&');
+
+        let response = await fetch("/register", {
+            method: "POST",
+            mode:'cors',
+            credentials: 'same-origin',
+            headers:{
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            referrerPolicy: 'no-referrer',
+            body: formBody
+        });
+        //response = await response.json();
+        console.log(response);
+    }
+
+</script>
+
 </html>

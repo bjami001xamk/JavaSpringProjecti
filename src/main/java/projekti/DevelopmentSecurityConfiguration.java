@@ -28,6 +28,9 @@ public class DevelopmentSecurityConfiguration extends WebSecurityConfigurerAdapt
     protected void configure(HttpSecurity http) throws Exception {
         
         http
+            .csrf()
+                .ignoringAntMatchers("/register")
+                .and()
             .authorizeRequests()
                 .antMatchers("/testi").permitAll()
                 .antMatchers("/*.css").permitAll()

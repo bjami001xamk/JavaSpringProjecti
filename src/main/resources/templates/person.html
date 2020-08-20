@@ -159,6 +159,12 @@
     //    event.preventDefault();
     //    document.getElementById('files').click();
     //})
+    //document.getElementById("formButton").addEventListener("click", (event) => {
+    //    event.preventDefault();
+    //    sendForm();
+
+    //})
+
     launchModal = async() => {
         $("#exampleModal").modal('show');
         let data = await fetch("/allpersons");
@@ -167,9 +173,9 @@
                    .join('');
         document.getElementById("modalText").innerHTML = data;
         
-
     }
 
+    
     //document.getElementById("searchPeople").onclick = launchModal();
 
 
