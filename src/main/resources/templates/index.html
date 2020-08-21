@@ -79,6 +79,7 @@
                                 </div>
                             </div>
                             <Button class="formSubmit" id="formButton" type="button" onclick="sendForm()">Register</Button>
+                            <p id="errorText"></p>
                         </form>
                     </div>
 
@@ -97,20 +98,39 @@
                 password: document.getElementById("inputPassword2").value
             }
 
-        const formBody = Object.keys(data).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key])).join('&');
-
-        let response = await fetch("/register", {
-            method: "POST",
-            mode:'cors',
-            credentials: 'same-origin',
-            headers:{
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            referrerPolicy: 'no-referrer',
-            body: formBody
-        });
+        if(data.firstName.length == 0 || data.lastName.length == 0 || data.userUrl.length == 0
+          || data.username.length < 3 || data.username.length > 15 || data.password.length > 15 || data.password.length < 5) {
+            document.getElementById("errorText").innerHTML = "Invalid inputs";
+            
+        } else {
+            const formBody = Object.keys(data).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key])).join('&');
+            try {
+                let response = await fetch("/register", {
+                    method: "POST",
+                    mode:'cors',
+                    credentials: 'same-origin',
+                    headers:{
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    referrerPolicy: 'no-referrer',
+                    redirect:"follow",
+                    body: formBody
+                });
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    document.getElementById("errorText").innerHTML = "Username or Url tag already taken";
+                }
+                
+            } catch (error) {
+                console.log(error);
+            }
+       
         //response = await response.json();
-        console.log(response);
+        //console.log(response);
+        }
+
+        
     }
 
 </script>
