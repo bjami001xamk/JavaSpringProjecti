@@ -60,6 +60,7 @@ public class Person extends AbstractPersistable<Long> {
         this.picture = picture;
         this.username = username;
         this.password = password;
+        this.friendRequests = new ArrayList<FriendRequest>();
     }
 
     public Person(PersonValidation person){
@@ -68,6 +69,7 @@ public class Person extends AbstractPersistable<Long> {
         this.userUrl = person.getUserUrl();
         this.username = person.getUsername();
         this.password = person.getPassword();
+        this.friendRequests = new ArrayList<FriendRequest>();
     }
 
 
@@ -75,4 +77,8 @@ public class Person extends AbstractPersistable<Long> {
     @JsonIgnore
     private List<Post> likedPosts = new ArrayList<>();
     
+    @JsonIgnore
+    @OneToMany(mappedBy = "personWhoSentFriendRequest")
+    private List<FriendRequest> friendRequests = new ArrayList<>();
+
 }

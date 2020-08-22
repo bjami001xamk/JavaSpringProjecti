@@ -28,10 +28,21 @@ public class DevelopmentSecurityConfiguration extends WebSecurityConfigurerAdapt
     protected void configure(HttpSecurity http) throws Exception {
         
         http
+
+        //httpSecurity.authorizeRequests().antMatchers("/").permitAll().and()
+            //.authorizeRequests().antMatchers("/console/**").permitAll();
+        //httpSecurity.csrf().disable();
+        //httpSecurity
+
             .csrf()
-                .ignoringAntMatchers("/register")
-                .and()
+                .disable()
+                //.ignoringAntMatchers("/register")
+                //.ignoringAntMatchers("/api/addFriendRequest")
+                //.and()
+                .headers().frameOptions().disable().and()
             .authorizeRequests()
+                .antMatchers("/h2-console").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/testi").permitAll()
                 .antMatchers("/*.css").permitAll()
                 .antMatchers("/*.ttf").permitAll()

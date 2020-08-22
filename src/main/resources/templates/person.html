@@ -48,6 +48,21 @@
                         <input id="submitButton" type="submit" value="Add new Skill" />
                     </form>
                 </div>
+                <div id="incomingFriendRequest" class="contentWindow">
+                    <h5 class="text-center">Friend Requests</h5>
+                    <div>
+                        <div th:each="friendRequest : ${friendRequests}" class='d-flex flex-column justify-content-center pt-3'>
+                            
+                            <span th:text="${friendRequest.getPersonWhoSentFriendRequest().getFirstName()}" class="text-center"></span>
+                            <div class="d-flex flex-row justify-content-center">
+                                <button class="m-2" th:onclick="@{${'acceptAsFriend(' + friendRequest.getId() + ')'}}">Accept</button>
+                                <button class="m-2" onclick="declineAsFriend()">Decline</button>
+                                <!-- "</a><button onclick='addAsFriend(\"" + person.userUrl + "\")'>Connect</button></div>"-->
+                            </div>
+                            <!--<span th:text="${#lists.size(skill.getPeopleWhoLiked())} + ' Winks'" class="skillElement">[Engine Size]</span>-->
+                        </div>
+                    </div>
+                </div>
             </div>
                 <div id="rightSide" class="mt-2">
                     <div id="newPost" class="contentWindow">
@@ -169,13 +184,46 @@
         $("#exampleModal").modal('show');
         let data = await fetch("/allpersons");
         data = await data.json();
-        data = data.map(person => "<a class='p-2'href= /users/" + person.userUrl + ">" + person.firstName + " " + person.lastName + "</a>")
+        console.log(data);
+        data = data.map(person => "<div class='d-flex flex-row justify-content-center'><a class='p-2 w-50'href= /users/" + person.userUrl + ">" + person.firstName + " " + person.lastName + "</a><button onclick='addAsFriend(\"" + person.userUrl + "\")'>Connect</button></div>")
                    .join('');
         document.getElementById("modalText").innerHTML = data;
         
     }
-
     
+    addAsFriend = async(userUrl) => {
+        console.log(userUrl);
+        let body = "userUrl=" + userUrl;
+        let response = await fetch("api/addFriendRequest",{
+            headers:{
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            method: "POST",
+            body: body
+        })
+        if(response.ok){
+            console.log("viesti meni perille");
+        }
+
+    }
+
+    acceptAsFriend = async(id) => {
+        console.log(id);
+        let body = "id=" + id;
+        let response = await fetch("api/acceptAsFriend",{
+            headers:{
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            method: "POST",
+            body: body
+        })
+        if (response.ok) {
+            window.location.href = "/profile";
+        }
+
+    }
+
+
     //document.getElementById("searchPeople").onclick = launchModal();
 
 

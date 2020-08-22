@@ -28,6 +28,9 @@ public class DefaultController {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private FriendRequestRepository friendRequestRepository;
+
     @GetMapping("/")
     public String helloWorld(Model model) {
         return "redirect:/login";
@@ -39,6 +42,7 @@ public class DefaultController {
         model.addAttribute("person", person);
         model.addAttribute("skills", person.getPersonSkills());
         model.addAttribute("posts", postRepository.findAll());
+        
         return "person";
     }
 
@@ -50,6 +54,9 @@ public class DefaultController {
         model.addAttribute("person", person);
         model.addAttribute("skills", person.getPersonSkills());
         model.addAttribute("posts", postRepository.findAll());
+        model.addAttribute("friendRequests", friendRequestRepository.findByPersonWhoReceiveFriendRequestId(person.getId()));
+        List<FriendRequest> lista = friendRequestRepository.findByPersonWhoReceiveFriendRequestId(person.getId());
+        System.out.println(lista.size());
         return "person";
 
     }

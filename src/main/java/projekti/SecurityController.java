@@ -36,7 +36,7 @@ public class SecurityController {
         try {
             request.login(incomingPerson.getUsername(), incomingPerson.getPassword());
         } catch (Exception e) {
-            return "Error with login" + e;
+            return "Error with automatic login" + e;
         }
             
         return "redirect:/profile";
