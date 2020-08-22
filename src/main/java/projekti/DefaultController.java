@@ -1,5 +1,6 @@
 package projekti;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class DefaultController {
     @Autowired
     private FriendRequestRepository friendRequestRepository;
 
+    @Autowired
+    private FriendRepository friendRepository;
+
     @GetMapping("/")
     public String helloWorld(Model model) {
         return "redirect:/login";
@@ -55,8 +59,26 @@ public class DefaultController {
         model.addAttribute("skills", person.getPersonSkills());
         model.addAttribute("posts", postRepository.findAll());
         model.addAttribute("friendRequests", friendRequestRepository.findByPersonWhoReceiveFriendRequestId(person.getId()));
-        List<FriendRequest> lista = friendRequestRepository.findByPersonWhoReceiveFriendRequestId(person.getId());
-        System.out.println(lista.size());
+        List<Friend> friendships = friendRepository.findByPerson1IdOrPerson2Id(person.getId(), person.getId());
+        
+        List<Person> personsWhoAreFriends = new ArrayList<Person>();
+        
+        for(Friend friend : friendships) {
+            if(friend.getPerson1Id() == person.getId()) {
+                personsWhoAreFriends.add(personRepository.getOne(friend.getPerson2Id()));
+            } else {
+                personsWhoAreFriends.add(personRepository.getOne(friend.getPerson1Id()));
+            }
+        }
+        
+        model.addAttribute("friends", personsWhoAreFriends);
+
+        //List<Friend> friends = friendRepository.findByFriendIdOrFriendId2(person.getId(), person.getId());
+        //model.addAttribute("friends", friends);
+        //System.out.println(friends.size());
+        
+        
+
         return "person";
 
     }

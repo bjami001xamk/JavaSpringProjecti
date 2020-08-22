@@ -63,6 +63,18 @@
                         </div>
                     </div>
                 </div>
+                <div id="Friends" class="contentWindow">
+                    <h5 class="text-center">Friends</h5>
+                    <div th:each="friend : ${friends}" class='d-flex flex-column justify-content-center pt-3'>
+                        
+                        <span th:text="${friend.getFirstName()}" class="text-center"></span>
+                        <button class="w-50 mx-auto" th:onclick="@{${'removeFriend(' + friend.getId() + ')'}}">Remove friend</button>
+                        
+                    </div>
+
+                    <!--<img th:if="${person.getPicture().getFileName()} == null" src="https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg" />
+                        <img th:unless="${person.getPicture().getFileName()} == null" th:src="@{${'/pictures/' + person.userUrl + '/'}}" />-->
+                </div>
             </div>
                 <div id="rightSide" class="mt-2">
                     <div id="newPost" class="contentWindow">
@@ -223,7 +235,20 @@
 
     }
 
-
+    removeFriend = async(id) => {
+        console.log(id);
+        let body = "id=" + id;
+        let response = await fetch("api/removeFriend",{
+            headers:{
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            method: "POST",
+            body: body
+        })
+        if (response.ok) {
+            window.location.href = "/profile";
+        }
+    }
     //document.getElementById("searchPeople").onclick = launchModal();
 
 
