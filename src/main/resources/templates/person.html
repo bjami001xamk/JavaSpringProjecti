@@ -97,10 +97,14 @@
                             <div>
                                 <p th:text="${post.content}" class="mx-5"></p>
                                 <div class="d-flex flex-row justify-content-end mr-3 mb-3">
-                                <span th:text="${post.poster.firstName + ' ' + post.poster.lastName}"></span>
-                                <span th:text="${post.postTime}" class="ml-3 font-weight-light"></span>
-                                </div>
 
+                                    <Button class="mr-5" th:onclick="@{${'openCommentModal(' + post.getId() + ')'}}">Comment</Button>
+                                    <!--<input class="pr-5 mr-5" id="commentInput" type="text" placeholder="Add comment" />
+                                    <Button class="mr-5" th:onclick="@{${'addComment(' + post.getId() + ')'}}">Send</Button>-->
+                                    <span th:text="${post.poster.firstName + ' ' + post.poster.lastName}"></span>
+                                    <span th:text="${post.postTime}" class="ml-3 font-weight-light"></span>
+                                   
+                                </div>
                             </div>
 
                         </div>
@@ -128,8 +132,24 @@
             </div>
           </div>
         </div>
-      </div>
+    </div>
 
+    <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add your comment</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body d-flex flex-column" id="modalText">
+                <input id="commentInput" />
+                <button class="w-25 mt-2" onclick="addComment()">Send</button>
+            </div>
+          </div>
+        </div>
+    </div>
     <!--
     <span th:text="${person.getPicture().getFileName()}">testi</span>->>
     
@@ -191,6 +211,7 @@
     //    sendForm();
 
     //})
+    let idOfcomment;
 
     launchModal = async() => {
         $("#exampleModal").modal('show');
@@ -236,9 +257,8 @@
     }
 
     removeFriend = async(id) => {
-        console.log(id);
         let body = "id=" + id;
-        let response = await fetch("api/removeFriend",{
+        let response = await fetch("/api/removeFriend",{
             headers:{
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
@@ -248,6 +268,26 @@
         if (response.ok) {
             window.location.href = "/profile";
         }
+    }
+
+    openCommentModal = (postId) => {
+        $("#commentModal").modal('show');
+        idOfcomment = postId;
+    }
+
+    addComment = async() => {
+        let body = "id=" + idOfcomment + "&content=" + document.getElementById("commentInput").value;
+        
+        let response = await fetch("/api/addMessageToPost",{
+            headers:{
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            method: "POST",
+            body: body
+        })
+        //if (response.ok) {
+        //    window.location.href = "./";
+        //}  window.location.reload()
     }
     //document.getElementById("searchPeople").onclick = launchModal();
 

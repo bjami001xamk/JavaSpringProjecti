@@ -2,10 +2,13 @@
 package projekti;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,11 +32,14 @@ public class Post extends AbstractPersistable<Long>{
     @ManyToMany(mappedBy = "likedPosts")
     private List<Person> postLikes;
     
+    @OneToMany(mappedBy = "post")
+    private List<Comment> postComments;
     
     public Post(String content) {
+        this.postComments = new ArrayList<>();
         this.content = content;
         this.postDate = LocalDateTime.now();
-
+        
         String minutes = postDate.getMinute() < 10 
             ? "0" + postDate.getMinute() 
             : String.valueOf(postDate.getMinute());
