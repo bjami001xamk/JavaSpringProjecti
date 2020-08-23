@@ -103,8 +103,19 @@
                                     <Button class="mr-5" th:onclick="@{${'addComment(' + post.getId() + ')'}}">Send</Button>-->
                                     <span th:text="${post.poster.firstName + ' ' + post.poster.lastName}"></span>
                                     <span th:text="${post.postTime}" class="ml-3 font-weight-light"></span>
-                                   
+                                    
                                 </div>
+                                <!--th:if="${person.getPicture().getFileName()} == null"-->
+                                <div th:if="${post.getPostComments().size()} > 0">
+                                    <h5 class="ml-3">Comments:</h5>
+                                    <div th:each="comment : ${post.getPostComments()}" class='d-flex flex-column justify-content-center pt-3'>
+                        
+                                        <span th:text="${comment.getMessage()}" class="text-left ml-5"></span>
+                                        <!--<button class="w-50 mx-auto" th:onclick="@{${'removeFriend(' + friend.getId() + ')'}}">Remove friend</button>-->
+                                        
+                                    </div>
+                                </div>
+
                             </div>
 
                         </div>

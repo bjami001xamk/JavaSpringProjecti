@@ -25,6 +25,9 @@ public class PostController {
     
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
     
     @PostMapping("/users/{userUrl}/addPost")
     public String addPost(@PathVariable String userUrl, @RequestParam String postContent) {
@@ -54,7 +57,9 @@ public class PostController {
     //@ResponseBody
     @PostMapping("/api/addMessageToPost")
         public ResponseEntity<String> addMessageToPost(@RequestParam Long id, String content) {
-        System.out.println(content);
+        Post post = postRepository.getOne(id);
+        Comment comment = new Comment(content, post);
+        commentRepository.save(comment);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
