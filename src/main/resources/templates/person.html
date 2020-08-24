@@ -35,7 +35,7 @@
                 <img th:if="${person.getPicture().getFileName()} == null" src="https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg" />
                 <img th:unless="${person.getPicture().getFileName()} == null" th:src="@{${'/pictures/' + person.userUrl + '/'}}" />
                 <div id="skills" class="contentWindow">
-                    <h5 class="text-center">Your current skills:</h5>
+                    <h5 class="text-center">Your top 3 skills:</h5>
                     <ul>
                         <li th:each="skill : ${skills}" class='skillRow'>
                             <span th:text="${skill.getSkillName()}" class="skillElement"></span>
@@ -43,6 +43,16 @@
                             <span th:text="${#lists.size(skill.getPeopleWhoLiked())} + ' Winks'" class="skillElement">[Engine Size]</span>
                         </li>
                     </ul>
+
+                    <h5 class="text-center">Rest of them:</h5>
+                    <ul>
+                        <li th:each="skill : ${restOfSkills}" class='skillRow'>
+                            <span th:text="${skill.getSkillName()}" class="skillElement"></span>
+                            <span>-</span>
+                            <span th:text="${#lists.size(skill.getPeopleWhoLiked())} + ' Winks'" class="skillElement">[Engine Size]</span>
+                        </li>
+                    </ul>
+
                     <form id="skillForm" th:action="@{${'/users/' + person.userUrl + '/addskill'}}" method="POST">
                         <input type="text" name="skillText" />
                         <input id="submitButton" type="submit" value="Add new Skill" />
@@ -97,7 +107,7 @@
                             <div>
                                 <p th:text="${post.content}" class="mx-5"></p>
                                 <div class="d-flex flex-row justify-content-end mr-3 mb-3">
-
+                                    <span class="mr-5" th:text="${#lists.size(post.getPostLikes())} + ' Likes'"></span>
                                     <Button class="mr-5" th:onclick="@{${'openCommentModal(' + post.getId() + ')'}}">Comment</Button>
                                     <!--<input class="pr-5 mr-5" id="commentInput" type="text" placeholder="Add comment" />
                                     <Button class="mr-5" th:onclick="@{${'addComment(' + post.getId() + ')'}}">Send</Button>-->

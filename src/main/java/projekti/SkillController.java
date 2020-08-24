@@ -22,7 +22,7 @@ public class SkillController {
         person.getPersonSkills().add(newSkill);
         skillRepository.save(newSkill);
         personRepository.save(person);
-        return "redirect:/users/" + userUrl;
+        return "redirect:/profile/";
     }
 
     @PostMapping("users/{userUrl}/likeskill")

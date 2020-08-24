@@ -1,12 +1,12 @@
 package projekti;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,16 +18,7 @@ public class DefaultController {
 private Services services;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private PersonRepository personRepository;
-
-    @Autowired
-    private PictureRepository pictureRepository;
-
-    @Autowired
-    private SkillRepository skillRepository;
 
     @Autowired
     private PostRepository postRepository;
@@ -58,8 +49,10 @@ private Services services;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Person person = personRepository.findByUsername(username);
+        HashMap<String, List<Skill>> skills = services.getSkills();
         model.addAttribute("person", person);
-        model.addAttribute("skills", person.getPersonSkills());
+        model.addAttribute("skills", skills.get("top3Skills"));
+        model.addAttribute("restOfSkills", skills.get("restOfSkills"));
         model.addAttribute("posts", services.getPostsAndTop10CommentsOnly());
         model.addAttribute("friendRequests", friendRequestRepository.findByPersonWhoReceiveFriendRequestId(person.getId()));
         List<Friend> friendships = friendRepository.findByPerson1IdOrPerson2Id(person.getId(), person.getId());
@@ -93,7 +86,7 @@ private Services services;
         return personRepository.findAll();
     }
 
-    @ResponseBody
+    /*@ResponseBody
     @GetMapping("/testi")
     public String testing() {
         String salasana1 = passwordEncoder.encode("salasana");
@@ -115,5 +108,5 @@ private Services services;
         personRepository.save(testPerson2);
         return "ehkä lisätty ehkä ei";
     }
-
+    */
 }
