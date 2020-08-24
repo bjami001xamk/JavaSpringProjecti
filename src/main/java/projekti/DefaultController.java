@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class DefaultController {
 
+@Autowired
+private Services services;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -57,7 +60,7 @@ public class DefaultController {
         Person person = personRepository.findByUsername(username);
         model.addAttribute("person", person);
         model.addAttribute("skills", person.getPersonSkills());
-        model.addAttribute("posts", postRepository.findAll());
+        model.addAttribute("posts", services.getPostsAndTop10CommentsOnly());
         model.addAttribute("friendRequests", friendRequestRepository.findByPersonWhoReceiveFriendRequestId(person.getId()));
         List<Friend> friendships = friendRepository.findByPerson1IdOrPerson2Id(person.getId(), person.getId());
         

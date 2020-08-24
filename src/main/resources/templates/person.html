@@ -80,7 +80,7 @@
                     <div id="newPost" class="contentWindow">
                         <h5 class="text-center ">Add a New post</h5>
                         <form th:action="@{${'/users/' + person.userUrl + '/addPost'}}" method="POST" class="d-flex flex-column">
-                            <textarea placeholder="Write your post here" rows="4" cols="40" name="postContent" class="m-2"></textarea>
+                            <textarea maxlength="250" placeholder="Write your post here" rows="4" cols="40" name="postContent" class="m-2"></textarea>
                             
                             <!--<input type="text" name="postContent" />-->
                             <input type="submit" value="Add new Post" class="w-25 mx-auto m-2"/>
@@ -155,7 +155,7 @@
               </button>
             </div>
             <div class="modal-body d-flex flex-column" id="modalText">
-                <input id="commentInput" />
+                <input maxlength="100" id="commentInput" />
                 <button class="w-25 mt-2" onclick="addComment()">Send</button>
             </div>
           </div>
@@ -296,9 +296,9 @@
             method: "POST",
             body: body
         })
-        //if (response.ok) {
-        //    window.location.href = "./";
-        //}  window.location.reload()
+        if (response.ok) {
+            window.location.reload();
+        }  
     }
     //document.getElementById("searchPeople").onclick = launchModal();
 
