@@ -61,6 +61,7 @@ public class Person extends AbstractPersistable<Long> {
         this.username = username;
         this.password = password;
         this.friendRequests = new ArrayList<FriendRequest>();
+        this.likedPosts = new ArrayList<Post>();
     }
 
     public Person(PersonValidation person){

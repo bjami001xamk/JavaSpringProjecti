@@ -41,7 +41,7 @@ private Services services;
         model.addAttribute("skills", person.getPersonSkills());
         model.addAttribute("posts", postRepository.findAll());
         
-        return "person";
+        return "otherpersonpage";
     }
 
     @GetMapping("/profile")
