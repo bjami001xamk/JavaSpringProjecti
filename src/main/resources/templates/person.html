@@ -19,7 +19,6 @@
             
         
             <div id="nameAndPicture">
-                
                 <span th:text="${person.getFirstName() + ' ' + person.getLastName()}" class="p-1"></span> 
             </div>
             <div id="links">
@@ -32,9 +31,20 @@
 
         <div id="contentWrapper" class="pt-1">
             <div id="leftSide">
-                <img th:if="${person.getPicture().getFileName()} == null" src="https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg" />
-                <img th:unless="${person.getPicture().getFileName()} == null" th:src="@{${'/pictures/' + person.userUrl + '/'}}" />
-                <div id="skills" class="contentWindow">
+                <form id="form" th:action="@{/addPicture}" method="POST" enctype="multipart/form-data" hidden>
+                    <input type="text" th:value="${person.userUrl}" name="userUrl" hidden />
+                    <input type="file" id="files" name="file" onchange="form.submit()" hidden/>
+                    <Button id="kuvavaihto">Nappi</Button>
+                </form>
+                <div class="contentWindow mx-2 mt-2">
+                    <a onclick="document.getElementById('files').click()" class="d-flex justify-content-center">
+                    <img th:if="${person.getPicture().getFileName()} == null" src="https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg" />
+                    </a>
+                    <a onclick="document.getElementById('files').click()" class="d-flex justify-content-center ">
+                    <img th:unless="${person.getPicture().getFileName()} == null" th:src="@{${'/pictures/' + person.userUrl + '/'}}" />
+                    </a>
+                </div>
+                <div id="skills" class="contentWindow mx-2">
                     <h5 class="text-center">Your top 3 skills:</h5>
                     <ul>
                         <li th:each="skill : ${skills}" class='skillRow'>
@@ -58,7 +68,7 @@
                         <input id="submitButton" type="submit" value="Add new Skill" />
                     </form>
                 </div>
-                <div id="incomingFriendRequest" class="contentWindow">
+                <div id="incomingFriendRequest" class="contentWindow mx-2">
                     <h5 class="text-center">Friend Requests</h5>
                     <div>
                         <div th:each="friendRequest : ${friendRequests}" class='d-flex flex-column justify-content-center pt-3'>
@@ -73,7 +83,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="Friends" class="contentWindow">
+                <div id="Friends" class="contentWindow mx-2 mt-2">
                     <h5 class="text-center">Friends</h5>
                     <div th:each="friend : ${friends}" class='d-flex flex-column justify-content-center pt-3'>
                         
