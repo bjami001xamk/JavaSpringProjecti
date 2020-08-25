@@ -45,10 +45,11 @@
                     </a>
                 </div>
                 <div id="skills" class="contentWindow mx-2">
-                    <h5 class="text-center">Your skills:</h5>
+                    <h5 class="text-center">Skills:</h5>
                     <p th:if="${skills.size()} == 0" class="text-center">None yet!</p>
                     <ul>
                         <li th:each="skill : ${skills}" class='skillRow'>
+                            <button th:onclick="@{${'likeSkill(' + skill.getId() + ')'}}">W</button>
                             <span th:text="${skill.getSkillName()}" class="skillElement"></span>
                             <span>-</span>
                             <span th:text="${#lists.size(skill.getPeopleWhoLiked())} + ' Winks'" class="skillElement">[Engine Size]</span>
@@ -275,6 +276,22 @@
         }
     }
 
+    likeSkill = async(skillId) => {
+        let body = "skillId=" + skillId;
+        
+        let response = await fetch("/api/likeSkill",{
+            headers:{
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            method: "POST",
+            body: body
+        })
+        if (response.ok) {
+            //window.location.reload();
+        } else{
+            alert("persiilleen män")
+        }
+    }
 
 </script>
 </html>

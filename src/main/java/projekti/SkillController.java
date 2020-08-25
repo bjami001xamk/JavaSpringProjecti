@@ -1,6 +1,8 @@
 package projekti;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,10 +27,14 @@ public class SkillController {
         return "redirect:/profile/";
     }
 
-    @PostMapping("users/{userUrl}/likeskill")
-    public String likeSkill(@RequestParam Long skillId, @PathVariable String userUrl) {
-        
-        //toimiva
+    @PostMapping("api/likeSkill")
+    public ResponseEntity<String> likeSkill(@RequestParam Long skillId) {
+        System.out.print(skillId);
+        skillRepository.getOne(skillId);
+
+
+
+        /*//toimiva
         Skill skill = skillRepository.getOne(skillId);
         Person personWhoIsLiking = personRepository.findByUserUrl("ccc");
         
@@ -37,7 +43,7 @@ public class SkillController {
         }
         skill.getPeopleWhoLiked().add(personWhoIsLiking);
         skillRepository.save(skill);
-                
-        return "redirect:/users/" + userUrl;
+        */
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
