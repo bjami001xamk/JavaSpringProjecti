@@ -46,6 +46,7 @@ public class DevelopmentSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .antMatchers("/testi").permitAll()
                 .antMatchers("/*.css").permitAll()
                 .antMatchers("/*.ttf").permitAll()
+                .antMatchers("/*.ico").permitAll()
                 .antMatchers("/allpersons").permitAll()
                 .antMatchers("/register").permitAll()
                 .anyRequest().authenticated()

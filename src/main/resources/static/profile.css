@@ -2,6 +2,15 @@
     font-family: Spirax;
     src: url(Spirax-Regular.ttf);
 }
+@font-face{
+    font-family: JosefinSans;
+    src: url(JosefinSans.ttf);
+}
+@font-face{
+    font-family: AbrilFatface;
+    src: url(AbrilFatface.ttf);
+}
+
 body{
     background: radial-gradient(ellipse at 50% 50%, #fff 0%, #9f9f9f 86.27%);
     width:100%;
@@ -20,6 +29,7 @@ hr{
     border-radius:0px;
     background-color:white;
     opacity:0.8;
+    min-width:286px;
 }
 
 
@@ -54,8 +64,8 @@ hr{
 
 #links a{
     padding:15px;
-    font-size:22px;
-    font-family:Spirax;
+    font-size:20px;
+    
     
 }
 
@@ -140,4 +150,15 @@ a:hover{
 h1{
     font-family:Spirax;
     font-size:70px;
+}
+
+h2,h3,h4,h5{
+    font-family:AbrilFatface;
+}
+span,p,text,button,a{
+    font-family:JosefinSans;
+}
+button{
+    border:0px;
+    box-shadow:0px 0px 2px black;
 }

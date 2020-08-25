@@ -7,6 +7,14 @@ body{
     font-family: Spirax;
     src: url(Spirax-Regular.ttf);
 }
+@font-face{
+    font-family: JosefinSans;
+    src: url(JosefinSans.ttf);
+}
+@font-face{
+    font-family: AbrilFatface;
+    src: url(AbrilFatface.ttf);
+}
 h1{
     font-family:Spirax;
     font-size:45px;
@@ -57,4 +65,7 @@ form{
 }
 .indexInput{
     max-width:70%;
+}
+a,label,button,input{
+    font-family:JosefinSans;
 }
