@@ -45,7 +45,8 @@
                     </a>
                 </div>
                 <div id="skills" class="contentWindow mx-2">
-                    <h5 class="text-center">Your top 3 skills:</h5>
+                    <h5 class="text-center">Your skills:</h5>
+                    <p th:if="${skills.size()} == 0" class="text-center">None yet!</p>
                     <ul>
                         <li th:each="skill : ${skills}" class='skillRow'>
                             <span th:text="${skill.getSkillName()}" class="skillElement"></span>
@@ -54,19 +55,17 @@
                         </li>
                     </ul>
 
-                    <h5 class="text-center">Rest of them:</h5>
-                    <ul>
+                    <ul th:if="${skills.size()} > 3" class="mt-4">
                         <li th:each="skill : ${restOfSkills}" class='skillRow'>
                             <span th:text="${skill.getSkillName()}" class="skillElement"></span>
                             <span>-</span>
                             <span th:text="${#lists.size(skill.getPeopleWhoLiked())} + ' Winks'" class="skillElement">[Engine Size]</span>
                         </li>
                     </ul>
-
                 </div>
-                
                 <div id="Friends" class="contentWindow mx-2 mt-2">
                     <h5 class="text-center">Friends</h5>
+                    <p th:if="${friends.size()} == 0" class="text-center">None added yet!</p>
                     <div th:each="friend : ${friends}" class='d-flex flex-column justify-content-center pt-3'>
                         
                         <span th:text="${friend.getFirstName()}" class="text-center"></span>
@@ -80,16 +79,14 @@
             </div>
                 <div id="rightSide">
 
-                    <div id="posts" class="contentWindow mt-2">
-                        <h5 class="text-center">Posts:</h5>
+                    <div id="posts">
+                        <h5 class="text-center contentWindow pb-1">Posts:</h5>
                         <div th:each="post : ${posts}">
-                            <hr class="w-75"/>
-                            <div>
-                                <p th:text="${post.content}" class="mx-5"></p>
-                                <div class="d-flex flex-row justify-content-end mr-3 mb-3">
-                                    <button th:onclick="@{${'likePost(' + post.getId() + ')'}}" class="mr-5">Like</button>
-                                    <span class="mr-5" th:text="${#lists.size(post.getPostLikes())} + ' Likes'"></span>
-                                    <Button class="mr-5" th:onclick="@{${'openCommentModal(' + post.getId() + ')'}}">Comment</Button>
+                            <div class="contentWindow mt-3">
+                                <p th:text="${post.content}" class="mx-5 mt-4"></p>
+                                <div class="d-flex flex-row justify-content-around mb-3">
+                                    <span class="" th:text="${#lists.size(post.getPostLikes())} + ' Likes'"></span>
+                                    <Button class="" th:onclick="@{${'openCommentModal(' + post.getId() + ')'}}">Comment</Button>
                                     <!--<input class="pr-5 mr-5" id="commentInput" type="text" placeholder="Add comment" />
                                     <Button class="mr-5" th:onclick="@{${'addComment(' + post.getId() + ')'}}">Send</Button>-->
                                     <span th:text="${post.poster.firstName + ' ' + post.poster.lastName}"></span>
@@ -97,7 +94,7 @@
                                     
                                 </div>
                                 <!--th:if="${person.getPicture().getFileName()} == null"-->
-                                <div th:if="${post.getPostComments().size()} > 0">
+                                <div th:if="${post.getPostComments().size()} > 0" class="pb-2">
                                     <h5 class="ml-3">Comments:</h5>
                                     <div th:each="comment : ${post.getPostComments()}" class='d-flex flex-column justify-content-center pt-3'>
                         

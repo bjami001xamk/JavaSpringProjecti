@@ -16,6 +16,12 @@ public class Services {
 
     @Autowired
     private SkillRepository skillRepository;
+    
+    @Autowired
+    private FriendRepository friendRepository;
+
+    @Autowired
+    private PersonRepository personRepository;
 
     public List<Post> getPostsAndTop10CommentsOnly() {
         List<Post> allPosts = postRepository.findAll();
@@ -51,9 +57,19 @@ public class Services {
         return hashMap;
     }
 
-    /*public List<Skill> getRestOfSkills() {
-        List<Skill> allSkills = skillRepository.findAll();
-        allSkills.remove(2);allSkills.remove(1);allSkills.remove(0);
-        return allSkills;
-    }*/
+    public List<Person> getPersonsFriends(Long personId) {
+        List<Friend> friendships = friendRepository.findByPerson1IdOrPerson2Id(personId, personId);
+        
+        List<Person> personsWhoAreFriends = new ArrayList<Person>();
+        
+        for(Friend friend : friendships) {
+            if(friend.getPerson1Id() == personId) {
+                personsWhoAreFriends.add(personRepository.getOne(friend.getPerson2Id()));
+            } else {
+                personsWhoAreFriends.add(personRepository.getOne(friend.getPerson1Id()));
+            }
+        }
+        return personsWhoAreFriends;
+    }
+
 }
