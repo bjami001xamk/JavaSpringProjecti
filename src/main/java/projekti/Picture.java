@@ -19,7 +19,7 @@ public class Picture extends AbstractPersistable<Long> {
     private String contentType;
     private Long size;
 
-    @Lob //Poista jotta toimii Herokussa 
+    //@Lob //Poista jotta toimii Herokussa 
     @Basic(fetch = FetchType.LAZY)
     private byte[] content;
 
