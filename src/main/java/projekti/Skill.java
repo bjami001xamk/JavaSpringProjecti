@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 @Entity
@@ -24,12 +22,11 @@ public class Skill extends AbstractPersistable<Long>{
     private Person person;
     private String skillName;
 
-    @ManyToMany
-    private List<Person> peopleWhoLiked = new ArrayList<>();
+    private int peopleWhoLiked;
     
     public Skill(Person person, String skillName) {
         this.person = person;
         this.skillName = skillName;
-        this.peopleWhoLiked = new ArrayList<>();
+        this.peopleWhoLiked = 0;
     }
 }

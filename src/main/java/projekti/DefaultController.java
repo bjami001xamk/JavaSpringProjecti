@@ -19,9 +19,6 @@ private Services services;
     private PersonRepository personRepository;
 
     @Autowired
-    private PostRepository postRepository;
-
-    @Autowired
     private FriendRequestRepository friendRequestRepository;
 
     @GetMapping("/")
@@ -32,9 +29,12 @@ private Services services;
     @GetMapping("/users/{userUrl}")
     public String personPage(@PathVariable String userUrl, Model model) {
         Person person = personRepository.findByUserUrl(userUrl);
+        HashMap<String, List<Skill>> skills = services.getSkills(person);
+
         model.addAttribute("person", person);
-        model.addAttribute("skills", person.getPersonSkills());
-        model.addAttribute("posts", postRepository.findAll());
+        model.addAttribute("skills", skills.get("top3Skills"));
+        model.addAttribute("restOfSkills", skills.get("restOfSkills"));
+        model.addAttribute("posts", services.get25PostsAndTop10CommentsOnly());
         model.addAttribute("friends", services.getPersonsFriends(person.getId()));
         return "otherpersonpage";
     }
@@ -44,11 +44,11 @@ private Services services;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Person person = personRepository.findByUsername(username);
-        HashMap<String, List<Skill>> skills = services.getSkills();
+        HashMap<String, List<Skill>> skills = services.getSkills(person);
         model.addAttribute("person", person);
         model.addAttribute("skills", skills.get("top3Skills"));
         model.addAttribute("restOfSkills", skills.get("restOfSkills"));
-        model.addAttribute("posts", services.getPostsAndTop10CommentsOnly());
+        model.addAttribute("posts", services.get25PostsAndTop10CommentsOnly());
         model.addAttribute("friendRequests", friendRequestRepository.findByPersonWhoReceiveFriendRequestId(person.getId()));
         model.addAttribute("friends", services.getPersonsFriends(person.getId()));
 

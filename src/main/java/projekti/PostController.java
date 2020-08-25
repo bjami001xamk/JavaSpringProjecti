@@ -31,7 +31,7 @@ public class PostController {
         newPost.setPoster(person);
         postRepository.save(newPost);
         
-        return "redirect:/users/" + userUrl;
+        return "redirect:/profile";
     }
     
     @PostMapping("/api/likePost")

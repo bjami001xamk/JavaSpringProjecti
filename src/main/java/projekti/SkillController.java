@@ -29,21 +29,9 @@ public class SkillController {
 
     @PostMapping("api/likeSkill")
     public ResponseEntity<String> likeSkill(@RequestParam Long skillId) {
-        System.out.print(skillId);
-        skillRepository.getOne(skillId);
-
-
-
-        /*//toimiva
         Skill skill = skillRepository.getOne(skillId);
-        Person personWhoIsLiking = personRepository.findByUserUrl("ccc");
-        
-        if(skill.getPeopleWhoLiked().contains(personWhoIsLiking)) {
-            return "redirect:/users/" + userUrl;
-        }
-        skill.getPeopleWhoLiked().add(personWhoIsLiking);
+        skill.setPeopleWhoLiked(skill.getPeopleWhoLiked() + 1);
         skillRepository.save(skill);
-        */
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

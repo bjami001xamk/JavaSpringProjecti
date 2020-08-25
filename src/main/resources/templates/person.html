@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <link href="../static/profile.css" th:href="@{/profile.css}" rel="stylesheet" />
+
 </head>
 <body>
     <div id="wrapper">
@@ -39,7 +40,7 @@
                 </form>
                 <div class="contentWindow mx-2 mt-2">
                     <a onclick="document.getElementById('files').click()" class="d-flex justify-content-center">
-                    <img th:if="${person.getPicture().getFileName()} == null" src="https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg" />
+                        <img th:if="${person.getPicture().getFileName()} == null" src="../static/setpicture.png" th:src="@{/setpicture.png}" />
                     </a>
                     <a onclick="document.getElementById('files').click()" class="d-flex justify-content-center ">
                     <img th:unless="${person.getPicture().getFileName()} == null" th:src="@{${'/pictures/' + person.userUrl + '/'}}" />
@@ -48,23 +49,25 @@
                 <div id="skills" class="contentWindow mx-2">
                     <h5 class="text-center">Your skills:</h5>
                     <p th:if="${skills.size()} == 0" class="text-center">Add your first skill from below</p>
-                    <ul>
-                        <li th:each="skill : ${skills}" class='skillRow'>
-                            <span th:text="${skill.getSkillName()}" class="skillElement"></span>
-                            <span>-</span>
-                            <span th:text="${#lists.size(skill.getPeopleWhoLiked())} + ' Winks'" class="skillElement">[Engine Size]</span>
-                        </li>
-                    </ul>
+                    <div th:each="skill : ${skills}" class='d-flex flex-column mt-2 mb-2'>
+                        <span th:text="${skill.getSkillName()}" class="text-center"></span>
+                        <div class="d-flex flex-row justify-content-center">
+                            <span th:text="${skill.getPeopleWhoLiked()} + ' Winks'" class="skillElement text-center"></span>
+                        </div>
+                    </div>
+                    
+                    <hr class="w-100"/>
 
-                    <ul th:if="${skills.size()} > 3" class="mt-4">
-                        <li th:each="skill : ${restOfSkills}" class='skillRow'>
-                            <span th:text="${skill.getSkillName()}" class="skillElement"></span>
-                            <span>-</span>
-                            <span th:text="${#lists.size(skill.getPeopleWhoLiked())} + ' Winks'" class="skillElement">[Engine Size]</span>
-                        </li>
-                    </ul>
+                    <div th:if="${restOfSkills.size()} > 0" class="mt-1">
+                        <div th:each="skill : ${restOfSkills}" class='d-flex flex-column mt-2 mb-2'>
+                            <span th:text="${skill.getSkillName()}" class="text-center"></span>
+                            <div class="d-flex flex-row justify-content-center">
+                                <span th:text="${skill.getPeopleWhoLiked()} + ' Winks'" class="skillElement text-center"></span>
+                            </div>
+                        </div>
+                    </div>
 
-                    <form id="skillForm" th:action="@{${'/users/' + person.userUrl + '/addskill'}}" method="POST">
+                    <form id="skillForm" th:action="@{${'/users/' + person.userUrl + '/addskill'}}" method="POST" class="mt-2">
                         <input type="text" name="skillText" />
                         <input id="submitButton" type="submit" value="Add new Skill" />
                     </form>
@@ -74,14 +77,13 @@
                     <p th:if="${friendRequests.size()} == 0" class="text-center">None currently!</p>
                     <div>
                         <div th:each="friendRequest : ${friendRequests}" class='d-flex flex-column justify-content-center pt-3'>
-                            
-                            <span th:text="${friendRequest.getPersonWhoSentFriendRequest().getFirstName()}" class="text-center"></span>
+                            <a th:href="@{/users/{id}(id=${friendRequest.getPersonWhoSentFriendRequest().getUserUrl()})}" class="text-center">
+                                <span th:text="${friendRequest.getPersonWhoSentFriendRequest().getFirstName() + ' ' + friendRequest.getPersonWhoSentFriendRequest().getLastName()}" class="text-center"></span>
+                            </a>
                             <div class="d-flex flex-row justify-content-center">
                                 <button class="m-2" th:onclick="@{${'acceptAsFriend(' + friendRequest.getId() + ')'}}">Accept</button>
                                 <button class="m-2" onclick="declineAsFriend()">Decline</button>
-                                <!-- "</a><button onclick='addAsFriend(\"" + person.userUrl + "\")'>Connect</button></div>"-->
                             </div>
-                            <!--<span th:text="${#lists.size(skill.getPeopleWhoLiked())} + ' Winks'" class="skillElement">[Engine Size]</span>-->
                         </div>
                     </div>
                 </div>
@@ -91,13 +93,12 @@
 
                     <div th:each="friend : ${friends}" class='d-flex flex-column justify-content-center pt-3'>
                         
-                        <span th:text="${friend.getFirstName()}" class="text-center"></span>
-                        <button class="w-50 mx-auto" th:onclick="@{${'removeFriend(' + friend.getId() + ')'}}">Remove friend</button>
+                        <a th:href="@{/users/{id}(id=${friend.getUserUrl()})}" class="text-center">
+                            <span th:text="${friend.getFirstName() + ' ' + friend.getLastName()}" class="text-center"></span>
+                        </a>
+                        <button class="w-50 mx-auto my-1" th:onclick="@{${'removeFriend(' + friend.getId() + ')'}}">Remove friend</button>
                         
                     </div>
-
-                    <!--<img th:if="${person.getPicture().getFileName()} == null" src="https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg" />
-                        <img th:unless="${person.getPicture().getFileName()} == null" th:src="@{${'/pictures/' + person.userUrl + '/'}}" />-->
                 </div>
             </div>
                 <div id="rightSide" class="mt-2">
@@ -105,8 +106,6 @@
                         <h5 class="text-center ">Add a New post</h5>
                         <form th:action="@{${'/users/' + person.userUrl + '/addPost'}}" method="POST" class="d-flex flex-column">
                             <textarea maxlength="250" placeholder="Write your post here" rows="4" cols="40" name="postContent" class="m-2"></textarea>
-                            
-                            <!--<input type="text" name="postContent" />-->
                             <input type="submit" value="Submit" class="w-25 mx-auto m-2"/>
                         </form>
                         
@@ -116,26 +115,26 @@
 
                     <div id="posts">
                         <h5 class="text-center contentWindow pb-1">Posts:</h5>
+                        
+                        <div th:if="${posts.getTotalElements()} == 0" class="contentWindow noPostsWindow d-flex flex-row">
+                            <p class="text-center w-100">No posts yet</p>
+                        </div>
+
                         <div th:each="post : ${posts}">
+
                             <div class="contentWindow mt-3">
                                 <p th:text="${post.content}" class="mx-5 mt-4"></p>
                                 <div class="d-flex flex-row justify-content-around mb-3">
                                     <span class="" th:text="${#lists.size(post.getPostLikes())} + ' Likes'"></span>
                                     <Button class="" th:onclick="@{${'openCommentModal(' + post.getId() + ')'}}">Comment</Button>
-                                    <!--<input class="pr-5 mr-5" id="commentInput" type="text" placeholder="Add comment" />
-                                    <Button class="mr-5" th:onclick="@{${'addComment(' + post.getId() + ')'}}">Send</Button>-->
                                     <span th:text="${post.poster.firstName + ' ' + post.poster.lastName}"></span>
                                     <span th:text="${post.postTime}" class="ml-3 font-weight-light"></span>
-                                    
                                 </div>
-                                <!--th:if="${person.getPicture().getFileName()} == null"-->
+    
                                 <div th:if="${post.getPostComments().size()} > 0" class="pb-2">
                                     <h5 class="ml-3">Comments:</h5>
                                     <div th:each="comment : ${post.getPostComments()}" class='d-flex flex-column justify-content-center pt-3'>
-                        
                                         <span th:text="${comment.getMessage()}" class="text-left ml-5"></span>
-                                        <!--<button class="w-50 mx-auto" th:onclick="@{${'removeFriend(' + friend.getId() + ')'}}">Remove friend</button>-->
-                                        
                                     </div>
                                 </div>
 
@@ -147,10 +146,7 @@
                 
         </div>    
     </div>
-    <!--<button type="button" onclick="launchModal()" id="modalButton" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        Launch demo modal
-      </button>-->
-      
+    
     <!-- Search persons modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -161,6 +157,11 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+            <div>
+                <span class="pl-3"> Filter people:</span>
+                <input type="text" id="filterText" />
+                
+            </div>
             <div class="modal-body d-flex flex-column" id="modalText">
               Loading...
             </div>
@@ -168,6 +169,7 @@
         </div>
     </div>
 
+    <!-- Add comment modal -->
     <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -184,147 +186,7 @@
           </div>
         </div>
     </div>
-    <!--
-    <span th:text="${person.getPicture().getFileName()}">testi</span>->>
     
-    
-    <form id="form" th:action="@{/addPicture}" method="POST" enctype="multipart/form-data">
-        <img th:src="@{${'/pictures/' + person.userUrl + '/'}}" />
-        <input type="text" th:value="${person.userUrl}" name="userUrl" class="d-none" />
-        <input type="file" id="files" name="file" onchange="form.submit()" class="d-none"/>
-        <Button id="kuvavaihto">Nappi</Button>
-    </form>
-    
-    <form th:action="@{${'/users/' + person.userUrl + '/addskill'}}" method="POST">
-        <input type="text" name="skillText" />
-        <input type="submit" value="Add new Skill" />
-    </form>
-
-    <div>
-        <h2>Skills</h2>
-        <ul>
-           <li th:each="skill : ${skills}">
-               <span th:text="${skill.getSkillName()}">testi</span>
-               <form th:action="@{${'/users/' + person.userUrl + '/likeskill'}}" method="POST">
-                   <input type="text" th:value="${person.getUserUrl()}" name="userUrl" class="d-none" />
-                   <input type="text" th:value="${skill.getId()}" name="skillId" class="d-none" />
-                   <input type="text" th:value="${skill.person}" name="skillOwner" class="d-none" />--><!--
-                   <input type="submit" value="tykkaa" />
-               </form>
-           </li>
-
-        </ul>
-    </div>
-    <div>
-        <h2>Create a Post</h2>
-        <form th:action="@{${'/users/' + person.userUrl + '/addPost'}}" method="POST">
-            <input type="text" name="postContent" />
-            <input type="submit" value="Add new Post" />
-        </form>
-        
-    </div>
-    
-    <div>
-        <h2>Tykkäyksentestaus</h2>
-        <form th:action="@{${'/users/' + person.userUrl + '/likepost'}}" method="POST">
-                   <input type="text" th:value="${person.getUserUrl()}" name="userUrl" class="d-none" />
-                   <input type="text" th:value="4" name="postId" class="d-none" />
-                   <input type="text" th:value="${skill.person}" name="skillOwner" class="d-none" />--><!--
-                   <input type="submit" value="tykkaaPostausta" />
-               </form>
-    </div>
-    -->
 </body>
-<script>
-    //document.getElementById('kuvavaihto').addEventListener('click', (event) => {
-    //    event.preventDefault();
-    //    document.getElementById('files').click();
-    //})
-    //document.getElementById("formButton").addEventListener("click", (event) => {
-    //    event.preventDefault();
-    //    sendForm();
-
-    //})
-    let idOfcomment;
-
-    launchModal = async() => {
-        $("#exampleModal").modal('show');
-        let data = await fetch("/allpersons");
-        data = await data.json();
-        console.log(data);
-        data = data.map(person => "<div class='d-flex flex-row justify-content-center'><a class='p-2 w-50'href= /users/" + person.userUrl + ">" + person.firstName + " " + person.lastName + "</a><button onclick='addAsFriend(\"" + person.userUrl + "\")'>Connect</button></div>")
-                   .join('');
-        document.getElementById("modalText").innerHTML = data;
-        
-    }
-    
-    addAsFriend = async(userUrl) => {
-        console.log(userUrl);
-        let body = "userUrl=" + userUrl;
-        let response = await fetch("api/addFriendRequest",{
-            headers:{
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            method: "POST",
-            body: body
-        })
-        if(response.ok){
-            console.log("viesti meni perille");
-        }
-
-    }
-
-    acceptAsFriend = async(id) => {
-        console.log(id);
-        let body = "id=" + id;
-        let response = await fetch("api/acceptAsFriend",{
-            headers:{
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            method: "POST",
-            body: body
-        })
-        if (response.ok) {
-            window.location.href = "/profile";
-        }
-
-    }
-
-    removeFriend = async(id) => {
-        let body = "id=" + id;
-        let response = await fetch("/api/removeFriend",{
-            headers:{
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            method: "POST",
-            body: body
-        })
-        if (response.ok) {
-            window.location.href = "/profile";
-        }
-    }
-
-    openCommentModal = (postId) => {
-        $("#commentModal").modal('show');
-        idOfcomment = postId;
-    }
-
-    addComment = async() => {
-        let body = "id=" + idOfcomment + "&content=" + document.getElementById("commentInput").value;
-        
-        let response = await fetch("/api/addMessageToPost",{
-            headers:{
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            method: "POST",
-            body: body
-        })
-        if (response.ok) {
-            window.location.reload();
-        }  
-    }
-    //document.getElementById("searchPeople").onclick = launchModal();
-
-
-</script>
+<script src="../static/scripts.js" th:src="@{/scripts.js}"></script>
 </html>

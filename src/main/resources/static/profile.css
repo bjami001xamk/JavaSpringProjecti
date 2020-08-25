@@ -162,3 +162,11 @@ button{
     border:0px;
     box-shadow:0px 0px 2px black;
 }
+
+.noPostsWindow{
+    height:400px;
+    align-items: center;
+}
+.noPostsWindow{
+    font-size:20px;
+}

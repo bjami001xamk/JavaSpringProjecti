@@ -39,10 +39,6 @@ public class Person extends AbstractPersistable<Long> {
     @OneToMany(mappedBy = "person")
     @JsonIgnore
     private List<Skill> personSkills = new ArrayList<>();
-    
-    @ManyToMany(mappedBy = "person")
-    @JsonIgnore
-    private List<Skill> skillsThatPersonHasLiked = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.MERGE) // Fetch type lazy?
     @JsonIgnore
@@ -71,6 +67,7 @@ public class Person extends AbstractPersistable<Long> {
         this.username = person.getUsername();
         this.password = person.getPassword();
         this.friendRequests = new ArrayList<FriendRequest>();
+        this.likedPosts = new ArrayList<Post>();
     }
 
 

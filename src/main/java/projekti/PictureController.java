@@ -32,14 +32,11 @@ public class PictureController {
         newPicture.setFileName(file.getOriginalFilename());
         newPicture.setSize(file.getSize());
         newPicture.setContentType(file.getContentType());
-
         person.setPicture(newPicture);
         newPicture.setPerson((person));
-
         pictureRepository.save(newPicture);
-        //personRepository.save(person);
 
-        return "redirect:/users/" + userUrl;
+        return "redirect:/profile/";
     }
 
     
