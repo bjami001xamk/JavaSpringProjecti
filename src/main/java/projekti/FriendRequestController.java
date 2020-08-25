@@ -32,6 +32,9 @@ public class FriendRequestController {
         Person person = personRepository.findByUserUrl(userUrl);
         Person LoggedInPerson = personRepository.findByUsername(auth.getName());
         FriendRequest friendRequest = new FriendRequest(LoggedInPerson, person.getId());
+        if(friendRequestRepository.findByPersonWhoSentFriendRequestAndPersonWhoReceiveFriendRequestId(LoggedInPerson, person.getId()) != null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         friendRequestRepository.save(friendRequest);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -67,5 +70,11 @@ public class FriendRequestController {
         //return "redirect:/profile";
     }
     
+    @Transactional
+    @PostMapping("/api/declineAsFriend")
+    public ResponseEntity<String> declineFriend(@RequestParam Long id){
+        friendRequestRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

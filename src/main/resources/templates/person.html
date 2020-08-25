@@ -82,7 +82,7 @@
                             </a>
                             <div class="d-flex flex-row justify-content-center">
                                 <button class="m-2" th:onclick="@{${'acceptAsFriend(' + friendRequest.getId() + ')'}}">Accept</button>
-                                <button class="m-2" onclick="declineAsFriend()">Decline</button>
+                                <button class="m-2" th:onclick="@{${'declineAsFriend(' + friendRequest.getId() + ')'}}">Decline</button>
                             </div>
                         </div>
                     </div>
@@ -125,10 +125,16 @@
                             <div class="contentWindow mt-3">
                                 <p th:text="${post.content}" class="mx-5 mt-4"></p>
                                 <div class="d-flex flex-row justify-content-around mb-3">
-                                    <span class="" th:text="${#lists.size(post.getPostLikes())} + ' Likes'"></span>
+                                    <div>
+                                        <span class="" th:text="${#lists.size(post.getPostLikes())} + ' Likes'"></span>
+                                        <Button class="ml-4" th:onclick="@{${'likePost(' + post.getId() + ')'}}">Like</Button>
+                                    </div>
+                                    
                                     <Button class="" th:onclick="@{${'openCommentModal(' + post.getId() + ')'}}">Comment</Button>
-                                    <span th:text="${post.poster.firstName + ' ' + post.poster.lastName}"></span>
-                                    <span th:text="${post.postTime}" class="ml-3 font-weight-light"></span>
+                                    <div>
+                                        <span th:text="${post.poster.firstName + ' ' + post.poster.lastName}"></span>
+                                        <span th:text="${post.postTime}" class="ml-3 font-weight-light"></span>
+                                    </div>
                                 </div>
     
                                 <div th:if="${post.getPostComments().size()} > 0" class="pb-2">

@@ -82,7 +82,7 @@
 
                     <div id="posts">
                         <h5 class="text-center contentWindow pb-1">Posts:</h5>
-                        <div th:if="${posts.getTotalElements()} == 0" class="contentWindow noPostsWindow d-flex flex-row">
+                        <div th:if="${posts.size()} == 0" class="contentWindow noPostsWindow d-flex flex-row">
                             <p class="text-center w-100">No posts yet</p>
                         </div>
                         <div th:each="post : ${posts}">

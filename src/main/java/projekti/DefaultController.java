@@ -28,13 +28,18 @@ private Services services;
 
     @GetMapping("/users/{userUrl}")
     public String personPage(@PathVariable String userUrl, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getName().equals(personRepository.findByUserUrl(userUrl).getUsername())) {
+            return "redirect:/profile";
+        }
+
         Person person = personRepository.findByUserUrl(userUrl);
         HashMap<String, List<Skill>> skills = services.getSkills(person);
 
         model.addAttribute("person", person);
         model.addAttribute("skills", skills.get("top3Skills"));
         model.addAttribute("restOfSkills", skills.get("restOfSkills"));
-        model.addAttribute("posts", services.get25PostsAndTop10CommentsOnly());
+        model.addAttribute("posts", personRepository.findByUserUrl(userUrl).getPosts());
         model.addAttribute("friends", services.getPersonsFriends(person.getId()));
         return "otherpersonpage";
     }
