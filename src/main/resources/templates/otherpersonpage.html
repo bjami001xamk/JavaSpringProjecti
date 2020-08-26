@@ -29,23 +29,25 @@
         </div>
         
 
-        <div id="contentWrapper" class="pt-1">
+        <div id="contentWrapper" class="pt-3">
             <div id="leftSide">
+                <h5 class="text-center">Profile picture</h5>
                 <form id="form" th:action="@{/addPicture}" method="POST" enctype="multipart/form-data" hidden>
                     <input type="text" th:value="${person.userUrl}" name="userUrl" hidden />
                     <input type="file" id="files" name="file" onchange="form.submit()" hidden/>
                     <Button id="kuvavaihto">Nappi</Button>
                 </form>
                 <div class="contentWindow mx-2 mt-2">
-                    <a class="d-flex justify-content-center">
+                    <a class="d-flex justify-content-center pictureLink">
                     <img th:if="${person.getPicture().getFileName()} == null" src="../static/setpicture.png" th:src="@{/setpicture.png}" />
                     </a>
-                    <a class="d-flex justify-content-center ">
+                    <a class="d-flex justify-content-center pictureLink">
                     <img th:unless="${person.getPicture().getFileName()} == null" th:src="@{${'/pictures/' + person.userUrl + '/'}}" />
                     </a>
                 </div>
-                <div id="skills" class="contentWindow mx-2">
-                    <h5 class="text-center">Skills:</h5>
+                <h5 class="text-center">Skills</h5>
+                <div id="skills" class="contentWindow mx-2 pt-3">
+                    
                     <p th:if="${skills.size()} == 0" class="text-center">None yet!</p>
                     
                     <div th:each="skill : ${skills}" class='d-flex flex-column mt-2 mb-2'>
@@ -68,9 +70,10 @@
                         </div>
                     </div>
                 </div>
-                <div id="Friends" class="contentWindow mx-2 mt-2">
-                    <h5 class="text-center">Friends</h5>
-                    <p th:if="${friends.size()} == 0" class="text-center">None added yet!</p>
+                <h5 class="text-center">Friends</h5>
+                <div id="Friends" class="contentWindow mx-2 pt-3 pb-3">
+                    
+                    <p th:if="${friends.size()} == 0" class="text-center pt-3">None added yet!</p>
                     <div th:each="friend : ${friends}" class='d-flex flex-column justify-content-center pt-3 pb-2'>
                         <a th:href="@{/users/{id}(id=${friend.getUserUrl()})}" class="text-center">
                             <span th:text="${friend.getFirstName() + ' ' + friend.getLastName()}" class="text-center"></span>
@@ -81,7 +84,7 @@
                 <div id="rightSide">
 
                     <div id="posts">
-                        <h5 class="text-center contentWindow pb-1">Posts:</h5>
+                        <h5 class="text-center pb-1">Posts:</h5>
                         <div th:if="${posts.size()} == 0" class="contentWindow noPostsWindow d-flex flex-row">
                             <p class="text-center w-100">No posts yet</p>
                         </div>
@@ -96,7 +99,7 @@
                                     
                                 </div>
                                 
-                                <div th:if="${post.getPostComments().size()} > 0" class="pb-2">
+                                <div th:if="${post.getPostComments().size()} > 0" class="pb-4">
                                     <h5 class="ml-3">Comments:</h5>
                                     <div th:each="comment : ${post.getPostComments()}" class='d-flex flex-column justify-content-center pt-3'>
                         
@@ -123,7 +126,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div>
+            <div class="mt-2">
                 <span class="pl-3"> Filter people:</span>
                 <input type="text" id="filterText" />
             </div>

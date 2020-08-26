@@ -1,35 +1,57 @@
 @font-face{
-    font-family: Spirax;
-    src: url(Spirax-Regular.ttf);
+    font-family: Alphacentauri;
+    src: url(Alphacentauri.ttf);
 }
 @font-face{
     font-family: JosefinSans;
-    src: url(JosefinSans.ttf);
+    src: url(Nunito-Light.ttf);
 }
 @font-face{
-    font-family: AbrilFatface;
-    src: url(AbrilFatface.ttf);
+    font-family: headerfont;
+    src: url(Nunito-Regular.ttf);
 }
 
 body{
-    background: radial-gradient(ellipse at 50% 50%, #fff 0%, #9f9f9f 86.27%);
+    background: radial-gradient(ellipse at 50% 50%, #116466 0%, #3b4742 86.27%);
     width:100%;
     height:100vh;
 }
+h5, span,p{
+    color:#D1E8E2;
+}
+#header{
+    border-bottom:3px solid #D1E8E2;
+}
+
+input,button,textarea{
+    border:1px solid #2C3531 !important;
+}
+
+h1{
+    color:#D1E8E2;
+}
+#links a{
+    color:#D1E8E2;
+}
+
+#nameAndPicture span{
+    color:#D1E8E2;
+}
+
 hr{
-    border:1px solid gray;
+    border:1px solid #D1E8E2;
 }
 #header > * {
     width:33.333%;
 }
 .contentWindow{
-    box-shadow:0px 0px 2px gray;
-    border:1px solid white;
-    opacity:0.8;
+    box-shadow:0px 0px 0px gray;
+    border:2px solid #D1E8E2;
     border-radius:0px;
-    background-color:white;
-    opacity:0.8;
+    background-color:transparent;
+    opacity:1;
     min-width:286px;
+    margin:20px;
 }
 
 
@@ -60,12 +82,13 @@ hr{
     display:flex;
     justify-content:flex-end;
     padding-right:20px;
+    align-items: center;
 }
 
 #links a{
     padding:15px;
     font-size:20px;
-    
+    font-family:headerfont;
     
 }
 
@@ -77,7 +100,8 @@ img{
 }
 
 #nameAndPicture > * {
-    font-size:28px;
+    font-size:40px;
+    font-family:headerfont;
 }
 
 #nameAndPicture{
@@ -97,6 +121,7 @@ img{
 }
 h5{
    padding-top:10px;
+   
 }
 .skillRow{
     display:flex;
@@ -137,30 +162,37 @@ h5{
     margin-top:10px;
 }
 a{
-    color:black;
+    color:#D1E8E2;
+    transition: 0.2s;
+    
+    transition-timing-function:ease-in-out;
 }
 
 a:hover{
+    
     text-decoration:none;
     color:white;
-    text-shadow:0px 0px 4px black;
-    transition: 0.3s;
+    text-shadow:0px 0px 5px #D1E8E2;
+    transform: scale(1.1);
+    
 }
 
 h1{
-    font-family:Spirax;
+    font-family:Alphacentauri;
     font-size:70px;
 }
 
 h2,h3,h4,h5{
-    font-family:AbrilFatface;
+    font-family:headerfont !important;
 }
 span,p,text,button,a{
-    font-family:JosefinSans;
+    font-family:JosefinSans !important;
 }
-button{
-    border:0px;
-    box-shadow:0px 0px 2px black;
+button, input,textarea {
+    border:3px solid #D1E8E2 !important;
+    /*box-shadow:0px 0px 2px black;*/
+    background-color:#D1E8E2;
+    color:#2C3531 !important
 }
 
 .noPostsWindow{
@@ -169,4 +201,41 @@ button{
 }
 .noPostsWindow{
     font-size:20px;
+}
+
+.modal-content{
+    border-radius: 0px !important;
+    background-color:#116466;
+}
+
+button{
+    background-color: #D1E8E2;
+    border:2px solid #D1E8E2 !important;
+    color:#116466 !important;
+    transition: 0.2s;
+    transition-timing-function:ease-in-out;
+
+}
+
+button:hover{
+    background-color:transparent;
+    color:#D1E8E2 !important;
+}
+
+.inputButton{
+    background-color: #D1E8E2;
+    border:2px solid #D1E8E2 !important;
+    color:#116466 !important;
+    transition: 0.2s;
+    transition-timing-function:ease-in-out;
+
+}
+
+.inputButton:hover{
+    background-color:transparent;
+    color:#D1E8E2 !important;
+}
+
+.pictureLink:hover{
+    transform: scale(1.0);
 }

@@ -24,7 +24,6 @@ public class SecurityController {
     
     @PostMapping("/register")
     public String Register(@Valid @ModelAttribute PersonValidation incomingPerson, HttpServletRequest request) {
-        System.out.println("testi");
         Person person = new Person(incomingPerson);
         person.setPassword(passwordEncoder.encode(incomingPerson.getPassword()));
         Picture picture = new Picture();

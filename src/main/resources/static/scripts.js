@@ -37,7 +37,7 @@ launchModal = async() => {
 addAsFriend = async(userUrl) => {
     console.log(userUrl);
     let body = "userUrl=" + userUrl;
-    let response = await fetch("api/addFriendRequest",{
+    let response = await fetch("/api/addFriendRequest",{
         headers:{
             'Content-Type': 'application/x-www-form-urlencoded'
         },
@@ -55,7 +55,7 @@ addAsFriend = async(userUrl) => {
 acceptAsFriend = async(id) => {
     console.log(id);
     let body = "id=" + id;
-    let response = await fetch("api/acceptAsFriend",{
+    let response = await fetch("/api/acceptAsFriend",{
         headers:{
             'Content-Type': 'application/x-www-form-urlencoded'
         },
@@ -71,7 +71,7 @@ acceptAsFriend = async(id) => {
 declineAsFriend = async(id) => {
     console.log(id);
     let body = "id=" + id;
-    let response = await fetch("api/declineAsFriend",{
+    let response = await fetch("/api/declineAsFriend",{
         headers:{
             'Content-Type': 'application/x-www-form-urlencoded'
         },

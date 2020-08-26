@@ -31,24 +31,26 @@
         </div>
         
 
-        <div id="contentWrapper" class="pt-1">
-            <div id="leftSide">
+        <div id="contentWrapper" class="pt-3">
+            <div id="leftSide" class="mt-2">
                 <form id="form" th:action="@{/addPicture}" method="POST" enctype="multipart/form-data" hidden>
                     <input type="text" th:value="${person.userUrl}" name="userUrl" hidden />
                     <input type="file" id="files" name="file" onchange="form.submit()" hidden/>
                     <Button id="kuvavaihto">Nappi</Button>
                 </form>
+                <h5 class="text-center">Profile picture</h5>
                 <div class="contentWindow mx-2 mt-2">
-                    <a onclick="document.getElementById('files').click()" class="d-flex justify-content-center">
+                    <a onclick="document.getElementById('files').click()" class="d-flex justify-content-center pictureLink">
                         <img th:if="${person.getPicture().getFileName()} == null" src="../static/setpicture.png" th:src="@{/setpicture.png}" />
                     </a>
-                    <a onclick="document.getElementById('files').click()" class="d-flex justify-content-center ">
+                    <a onclick="document.getElementById('files').click()" class="d-flex justify-content-center pictureLink">
                     <img th:unless="${person.getPicture().getFileName()} == null" th:src="@{${'/pictures/' + person.userUrl + '/'}}" />
                     </a>
                 </div>
+                <h5 class="text-center">Your skills</h5>
                 <div id="skills" class="contentWindow mx-2">
-                    <h5 class="text-center">Your skills:</h5>
-                    <p th:if="${skills.size()} == 0" class="text-center">Add your first skill from below</p>
+                    
+                    <p th:if="${skills.size()} == 0" class="text-center pt-3">Add your first skill from below</p>
                     <div th:each="skill : ${skills}" class='d-flex flex-column mt-2 mb-2'>
                         <span th:text="${skill.getSkillName()}" class="text-center"></span>
                         <div class="d-flex flex-row justify-content-center">
@@ -56,7 +58,7 @@
                         </div>
                     </div>
                     
-                    <hr class="w-100"/>
+                    
 
                     <div th:if="${restOfSkills.size()} > 0" class="mt-1">
                         <div th:each="skill : ${restOfSkills}" class='d-flex flex-column mt-2 mb-2'>
@@ -69,12 +71,12 @@
 
                     <form id="skillForm" th:action="@{${'/users/' + person.userUrl + '/addskill'}}" method="POST" class="mt-2">
                         <input type="text" name="skillText" />
-                        <input id="submitButton" type="submit" value="Add new Skill" />
+                        <input id="submitButton" class="inputButton" type="submit" value="Add skill" />
                     </form>
                 </div>
-                <div id="incomingFriendRequest" class="contentWindow mx-2">
-                    <h5 class="text-center">Friend Requests</h5>
-                    <p th:if="${friendRequests.size()} == 0" class="text-center">None currently!</p>
+                <h5 class="text-center mt-2">Friend Requests</h5>
+                <div id="incomingFriendRequest" class="contentWindow mx-2 mt-1 pb-2">
+                    <p th:if="${friendRequests.size()} == 0" class="text-center pt-4">None currently!</p>
                     <div>
                         <div th:each="friendRequest : ${friendRequests}" class='d-flex flex-column justify-content-center pt-3'>
                             <a th:href="@{/users/{id}(id=${friendRequest.getPersonWhoSentFriendRequest().getUserUrl()})}" class="text-center">
@@ -87,9 +89,10 @@
                         </div>
                     </div>
                 </div>
-                <div id="Friends" class="contentWindow mx-2 mt-2">
-                    <h5 class="text-center">Friends</h5>
-                    <p th:if="${friends.size()} == 0" class="text-center">None added yet!</p>
+                <h5 class="text-center">Friends</h5>
+                <div id="Friends" class="contentWindow mx-2 mt-2 pb-3">
+                    
+                    <p th:if="${friends.size()} == 0" class="text-center pt-4">None added yet!</p>
 
                     <div th:each="friend : ${friends}" class='d-flex flex-column justify-content-center pt-3'>
                         
@@ -102,11 +105,12 @@
                 </div>
             </div>
                 <div id="rightSide" class="mt-2">
-                    <div id="newPost" class="contentWindow">
-                        <h5 class="text-center ">Add a New post</h5>
+                    <h5 class="text-center ">Add a New post</h5>
+                    <div id="newPost" class="contentWindow mt-3">
+                        
                         <form th:action="@{${'/users/' + person.userUrl + '/addPost'}}" method="POST" class="d-flex flex-column">
-                            <textarea maxlength="250" placeholder="Write your post here" rows="4" cols="40" name="postContent" class="m-2"></textarea>
-                            <input type="submit" value="Submit" class="w-25 mx-auto m-2"/>
+                            <textarea maxlength="250" placeholder="Write your post here" rows="4" cols="40" name="postContent" class="m-3"></textarea>
+                            <input type="submit" value="Submit" class="w-25 mx-auto mb-2 inputButton"/>
                         </form>
                         
 
@@ -114,7 +118,7 @@
                     </div>
 
                     <div id="posts">
-                        <h5 class="text-center contentWindow pb-1">Posts:</h5>
+                        <h5 class="text-center pb-1">Posts:</h5>
                         
                         <div th:if="${posts.getTotalElements()} == 0" class="contentWindow noPostsWindow d-flex flex-row">
                             <p class="text-center w-100">No posts yet</p>
@@ -137,7 +141,7 @@
                                     </div>
                                 </div>
     
-                                <div th:if="${post.getPostComments().size()} > 0" class="pb-2">
+                                <div th:if="${post.getPostComments().size()} > 0" class="pb-4">
                                     <h5 class="ml-3">Comments:</h5>
                                     <div th:each="comment : ${post.getPostComments()}" class='d-flex flex-column justify-content-center pt-3'>
                                         <span th:text="${comment.getMessage()}" class="text-left ml-5"></span>
@@ -163,7 +167,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div>
+            <div class="mt-2">
                 <span class="pl-3"> Filter people:</span>
                 <input type="text" id="filterText" />
                 
