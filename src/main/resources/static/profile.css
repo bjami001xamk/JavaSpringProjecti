@@ -21,6 +21,7 @@ h5, span,p{
 }
 #header{
     border-bottom:3px solid #D1E8E2;
+    width:100%;
 }
 
 input,button,textarea{
@@ -69,12 +70,14 @@ hr{
     height:100%;
     display:flex;
     flex-direction:column;
+    align-items: center;
 }
 
 #contentWrapper{
     display:flex;
     flex-direction: row;
     justify-content: center;
+    max-width:1200px;
 }
 
 
