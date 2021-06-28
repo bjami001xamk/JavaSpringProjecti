@@ -15,30 +15,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class DevelopmentSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    /*@Override
-    public void configure(WebSecurity sec) throws Exception {
-        // Pyyntöjä ei tarkasteta
-        sec.ignoring().antMatchers("/**");
-        
-    }*/
-
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
     protected void configure(HttpSecurity http) throws Exception {
         
         http
-
-        //httpSecurity.authorizeRequests().antMatchers("/").permitAll().and()
-            //.authorizeRequests().antMatchers("/console/**").permitAll();
-        //httpSecurity.csrf().disable();
-        //httpSecurity
-
             .csrf()
                 .disable()
-                //.ignoringAntMatchers("/register")
-                //.ignoringAntMatchers("/api/addFriendRequest")
-                //.and()
                 .headers().frameOptions().disable().and()
             .authorizeRequests()
                 .antMatchers("/h2-console").permitAll()
@@ -62,41 +46,6 @@ public class DevelopmentSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
-
-        
-        
-        
-        
-        
-        /*.csrf().disable()
-            .authorizeRequests()
-            .antMatchers("/admin/**").hasRole("ADMIN")
-            .antMatchers("/anonymous*").anonymous()
-            .antMatchers("/").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .formLogin()
-            .loginPage("/")
-            .loginProcessingUrl("/perform_login")
-            .defaultSuccessUrl("/users/testiurl", true)
-            //.failureUrl("/login.html?error=true")
-            //.failureHandler(authenticationFailureHandler())
-            .and()
-            .logout();
-            //.logoutUrl("/perform_logout")
-            //.deleteCookies("JSESSIONID")
-           // .logoutSuccessHandler(logoutSuccessHandler());
-
-
-
-                /*.antMatchers("/").permitAll()
-                .antMatchers("/users/*").authenticated()
-                .antMatchers("/login").permitAll();
-                //.antMatchers("/access").permitAll()
-                //.antMatchers("/to", "/to/*").permitAll()
-                //.anyRequest().authenticated().and()
-                //.formLogin().permitAll().and()
-                //.logout().permitAll();*/
     }
 
     @Autowired
