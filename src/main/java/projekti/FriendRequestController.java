@@ -67,7 +67,6 @@ public class FriendRequestController {
             }
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        //return "redirect:/profile";
     }
     
     @Transactional

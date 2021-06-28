@@ -78,12 +78,4 @@ public class Person extends AbstractPersistable<Long> {
     @JsonIgnore
     @OneToMany(mappedBy = "personWhoSentFriendRequest")
     private List<FriendRequest> friendRequests = new ArrayList<>();
-
-    /*@JsonIgnore
-    @OneToMany(mappedBy = "PersonWhoRequested")
-    private List<Friend> Friends = new ArrayList<>();*/
-    
-
-
-
 }

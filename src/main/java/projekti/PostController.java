@@ -50,13 +50,11 @@ public class PostController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     
-    //@ResponseBody
     @PostMapping("/api/addMessageToPost")
         public ResponseEntity<String> addMessageToPost(@RequestParam Long id, String content) {
         Post post = postRepository.getOne(id);
         Comment comment = new Comment(content, post);
         commentRepository.save(comment);
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
